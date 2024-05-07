@@ -1,0 +1,7 @@
+{
+    "title": "Theme_Pet",
+    "body": "",
+    "imageFront": "/src/assets/IOToys/Theme_Pet-front.webp",
+    "imageBack": "/src/assets/IOToys/Theme_Pet-back.webp",
+    "flippable": true
+}

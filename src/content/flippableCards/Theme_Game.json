@@ -1,0 +1,7 @@
+{
+    "title": "Theme_Game",
+    "body": "",
+    "imageFront": "/src/assets/IOToys/Theme_Game-front.webp",
+    "imageBack": "/src/assets/IOToys/Theme_Game-back.webp",
+    "flippable": true
+}

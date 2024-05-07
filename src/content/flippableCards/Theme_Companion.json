@@ -1,0 +1,7 @@
+{
+    "title": "Theme_Companion",
+    "body": "",
+    "imageFront": "/src/assets/IOToys/Theme_Companion-front.webp",
+    "imageBack": "/src/assets/IOToys/Theme_Companion-back.webp",
+    "flippable": true
+}

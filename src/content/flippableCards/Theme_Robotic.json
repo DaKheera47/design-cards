@@ -1,0 +1,7 @@
+{
+    "title": "Theme_Robotic",
+    "body": "",
+    "imageFront": "/src/assets/IOToys/Theme_Robotic-front.webp",
+    "imageBack": "/src/assets/IOToys/Theme_Robotic-back.webp",
+    "flippable": true
+}

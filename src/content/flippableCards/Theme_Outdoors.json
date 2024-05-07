@@ -1,0 +1,7 @@
+{
+    "title": "Theme_Outdoors",
+    "body": "",
+    "imageFront": "/src/assets/IOToys/Theme_Outdoors-front.webp",
+    "imageBack": "/src/assets/IOToys/Theme_Outdoors-back.webp",
+    "flippable": true
+}
