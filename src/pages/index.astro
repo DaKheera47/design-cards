@@ -15,10 +15,7 @@ const flippableCards = await getCollection("flippableCards");
       <strong>Code Challenge:</strong> Tweak the "Welcome to Astro" message above.
     </p>
 
-    <ul
-      role="list"
-      class="link-card-grid"
-    >
+    <ul>
       {flippableCards.map((card) => <Card {...card.data} />)}
     </ul>
   </main>

@@ -22,7 +22,10 @@ if (!images[imageFront]) {
 }
 ---
 
-<li class="text-white">
+<a
+  class="text-white hover:underline"
+  href=`/cards/${title}`
+>
   <h2>
     {title}
   </h2>
@@ -31,9 +34,9 @@ if (!images[imageFront]) {
     {body}
   </p>
 
-  <Image
+  <!-- <Image
     src={images[imageFront]()}
     alt={title || ""}
     class="max-w-96"
-  />
-</li>
+  /> -->
+</a>

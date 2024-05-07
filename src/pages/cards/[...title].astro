@@ -1,0 +1,19 @@
+---
+import { getCollection } from "astro:content";
+
+export async function getStaticPaths() {
+  const cards = await getCollection("flippableCards");
+  return cards.map((entry) => ({
+    params: { title: entry.data.title },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+---
+
+<h1>
+  {entry.data.title}
+</h1>
+
+<a href="/">Back to home!</a>
