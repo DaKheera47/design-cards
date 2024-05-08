@@ -1,7 +1,8 @@
 ---
+import { Button, buttonVariants } from "@/components/ui/button";
 import { getCollection } from "astro:content";
 import FlippyCard from "../../components/FlippyCard.tsx";
-import Card from "../../components/Card.astro";
+import Layout from "../../layouts/Layout.astro";
 
 export async function getStaticPaths() {
   const cards = await getCollection("flippableCards");
@@ -14,12 +15,23 @@ export async function getStaticPaths() {
 const { entry } = Astro.props;
 ---
 
-<FlippyCard
-  client:load
-  {...entry.data}
-/>
+<Layout title=`Card -- ${entry.data.title}`>
+  <section>
+    <FlippyCard
+      client:load
+      {...entry.data}
+    />
 
-<a href="/">Back to home!</a>
+    <div class="flex w-full space-x-4">
+      <a
+        class={buttonVariants({ variant: "secondary" })}
+        href="/"
+      >
+        Back to home!
+      </a>
+    </div>
+  </section>
+</Layout>
 
 <style is:global>
   /* entire container, keeps perspective */

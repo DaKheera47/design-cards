@@ -7,16 +7,11 @@ const flippableCards = await getCollection("flippableCards");
 ---
 
 <Layout title="Welcome to Astro.">
-  <main>
-    <h1>Welcome to <span class="text-gradient">Astro</span></h1>
-    <p class="instructions">
-      To get started, open the directory <code>src/pages</code> in your project.<br
-      />
-      <strong>Code Challenge:</strong> Tweak the "Welcome to Astro" message above.
-    </p>
+  <section>
+    <h1 class="mb-8">Welcome to Astro</h1>
 
     <ul>
       {flippableCards.map((card) => <Card {...card.data} />)}
     </ul>
-  </main>
+  </section>
 </Layout>

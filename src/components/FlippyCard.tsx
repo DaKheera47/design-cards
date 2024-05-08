@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { cn } from "../utils/cn";
+import { cn } from "@/lib/utils";
 
 type Props = {
   title?: string | undefined;
@@ -46,7 +46,7 @@ export default function FlippyCard({ title, imageFront, imageBack }: Props) {
 
       <button
         onClick={handleClick}
-        className="rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700"
+        className="rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-700"
       >
         Flip
       </button>
