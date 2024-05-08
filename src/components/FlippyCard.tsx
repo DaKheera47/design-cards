@@ -2,11 +2,11 @@ import { useState } from "react";
 import { cn } from "../utils/cn";
 
 type Props = {
-  imageFront: string;
   title?: string | undefined;
   body?: string | undefined;
-  imageBack?: string | undefined;
   flippable?: boolean | undefined;
+  imageFront: ImageMetadata;
+  imageBack?: ImageMetadata | undefined;
 };
 
 export default function FlippyCard({ title, imageFront, imageBack }: Props) {
@@ -22,13 +22,23 @@ export default function FlippyCard({ title, imageFront, imageBack }: Props) {
         <div className="flipper">
           <div className="front">
             <h2>{title} -- Front</h2>
-            <img src={imageFront} alt={title || ""} width={300} height={300} />
+            <img
+              src={imageFront.src}
+              alt={title || ""}
+              width={300}
+              height={300}
+            />
           </div>
 
           <div className="back">
             <h2>{title} -- Back</h2>
             {imageBack && (
-              <img src={imageBack} alt={title || ""} width={300} height={300} />
+              <img
+                src={imageBack.src}
+                alt={title || ""}
+                width={300}
+                height={300}
+              />
             )}
           </div>
         </div>

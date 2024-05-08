@@ -10,4 +10,5 @@ export default defineConfig({
   adapter: vercel({
     imageService: true,
   }),
+  site: "https://design-cards.vercel.app/",
 });

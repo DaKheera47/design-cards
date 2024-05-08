@@ -14,15 +14,10 @@ export async function getStaticPaths() {
 const { entry } = Astro.props;
 ---
 
-<!-- <h1>
-  {entry.data.title}
-</h1> -->
 <FlippyCard
   client:load
   {...entry.data}
 />
-
-<!-- <Card {...entry.data} /> -->
 
 <a href="/">Back to home!</a>
 
