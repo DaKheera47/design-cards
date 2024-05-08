@@ -15,7 +15,7 @@ export async function getStaticPaths() {
 const { entry } = Astro.props;
 ---
 
-<Layout title=`Card -- ${entry.data.title}`>
+<Layout title=`${entry.data.title} Card`>
   <section class="py-12">
     <FlippyCard
       client:load
