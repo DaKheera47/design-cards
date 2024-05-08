@@ -32,9 +32,6 @@ dependencies:
   react-dom:
     specifier: ^18.3.1
     version: 18.3.1(react@18.3.1)
-  static:
-    specifier: link:@astrojs/vercel/static
-    version: link:@astrojs/vercel/static
   tailwind-merge:
     specifier: ^2.3.0
     version: 2.3.0
