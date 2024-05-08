@@ -1,4 +1,7 @@
 ---
+import { buttonVariants } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
+
 // https://davidwalsh.name/css-flip
 
 interface Props {
@@ -13,14 +16,12 @@ const { title, body, imageFront, imageBack } = Astro.props;
 ---
 
 <a
-  class="text-white hover:underline"
+  class={cn(buttonVariants({ variant: "outline" }), "border")}
   href=`/cards/${title}`
 >
-  <h2>
+  <h4>
     {title}
-  </h2>
+  </h4>
 
-  <p>
-    {body}
-  </p>
+  {body && <p>{body}</p>}
 </a>

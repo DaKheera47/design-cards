@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { cn } from "@/lib/utils";
+import { Button, buttonVariants } from "@/components/ui/button";
 
 type Props = {
   title?: string | undefined;
@@ -17,39 +18,52 @@ export default function FlippyCard({ title, imageFront, imageBack }: Props) {
   };
 
   return (
-    <div>
-      <div className={cn("flip-container", { flip: isFlipped })}>
+    <div className="mx-auto max-w-md text-center">
+      <p>
+        Currently showing{" "}
+        <span className="font-bold">{!isFlipped ? "Front" : "Back"}</span> of{" "}
+        <span className="font-bold">{title}</span>
+      </p>
+
+      <div
+        className={cn("flip-container mx-auto my-4", {
+          flip: isFlipped,
+        })}
+      >
         <div className="flipper">
-          <div className="front">
-            <h2>{title} -- Front</h2>
+          <div className="front rounded-lg border shadow-md">
+            <p className="text-center font-bold">Front</p>
+
             <img
               src={imageFront.src}
               alt={title || ""}
-              width={300}
-              height={300}
+              className="h-5/6 w-full object-contain"
             />
           </div>
 
-          <div className="back">
-            <h2>{title} -- Back</h2>
+          <div className="back rounded-lg border shadow-md">
+            <p className="text-center font-bold">Back</p>
+
             {imageBack && (
               <img
                 src={imageBack.src}
                 alt={title || ""}
-                width={300}
-                height={300}
+                className="h-[95%] w-full object-contain"
               />
             )}
           </div>
         </div>
       </div>
 
-      <button
-        onClick={handleClick}
-        className="rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-700"
-      >
-        Flip
-      </button>
+      <div className="flex w-full justify-between">
+        <a className={buttonVariants({ variant: "secondary" })} href="/">
+          Back to home
+        </a>
+
+        <Button onClick={handleClick}>
+          {isFlipped ? "Show Front" : "Show Back"}
+        </Button>
+      </div>
     </div>
   );
 }
