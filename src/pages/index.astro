@@ -1,16 +1,26 @@
 ---
+import { buttonVariants } from "@/components/ui/button";
 import Layout from "../layouts/Layout.astro";
-import IndexItem from "../components/IndexItem.astro";
 
 import { getCollection } from "astro:content";
+import IndexItem from "src/components/IndexItem.astro";
 const flippableCards = await getCollection("flippableCards");
 ---
 
 <Layout title="Choose your card">
   <section>
     <h1 class="my-12 text-balance text-center text-2xl font-bold capitalize">
-      Choose a design card to analyze
+      Start your adventure
     </h1>
+
+    <div class="flex w-full justify-center">
+      <a
+        href="/random-cards"
+        class:list={[buttonVariants({ variant: "default" }), "mb-10 w-full"]}
+      >
+        Randomize
+      </a>
+    </div>
 
     <div
       class="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4"
