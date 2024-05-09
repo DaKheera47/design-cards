@@ -18,7 +18,7 @@ export default function FlippyCard({ title, imageFront, imageBack }: Props) {
   };
 
   return (
-    <div className="mx-auto max-w-md text-center">
+    <div className="mx-auto max-w-2xl text-center">
       <p>
         Currently showing{" "}
         <span className="font-bold">{!isFlipped ? "Front" : "Back"}</span> of{" "}
