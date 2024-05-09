@@ -37,7 +37,7 @@ export default function FlippyCard({ title, imageFront, imageBack }: Props) {
             <img
               src={imageFront.src}
               alt={title || ""}
-              className="h-5/6 w-full object-contain"
+              className="h-[95%] w-full object-contain"
             />
           </div>
 
