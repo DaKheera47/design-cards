@@ -13,7 +13,7 @@ type Props = {
 
 const DEFAULT_CARD_FLIP_TIMER = 30000;
 
-const IndexPage = ({ cards }: Props) => {
+const RandomCardManager = ({ cards }: Props) => {
   const [activeCardIdx, setActiveCardIdx] = useState(0);
   const [randomisedCards, setRandomisedCards] = useState<TCard[]>([]);
   const [enableDebug, setEnableDebug] = useState(false);
@@ -115,4 +115,4 @@ const IndexPage = ({ cards }: Props) => {
   );
 };
 
-export default IndexPage;
+export default RandomCardManager;

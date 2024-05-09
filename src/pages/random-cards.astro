@@ -3,12 +3,12 @@ import Layout from "../layouts/Layout.astro";
 
 import { getCollection } from "astro:content";
 const flippableCards = await getCollection("flippableCards");
-import RandomCards from "src/components/RandomCards.tsx";
+import RandomCardManager from "src/components/RandomCardManager";
 ---
 
 <Layout title="Start your randomised experience">
   <section class="py-8">
-    <RandomCards
+    <RandomCardManager
       client:load
       cards={flippableCards}
     />
