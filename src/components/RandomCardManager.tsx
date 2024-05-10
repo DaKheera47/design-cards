@@ -68,6 +68,10 @@ const RandomCardManager = ({ cards }: Props) => {
           questionTitle: randomisedCards[activeCardIdx].data.title ?? "",
           chosenAnswer,
           flips,
+          session: chosenSession ?? "",
+          device: chosenDevice ?? "",
+          submission_timestamp: new Date().toISOString(),
+          isEyeTracked,
         },
       ]);
 

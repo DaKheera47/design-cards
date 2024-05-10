@@ -15,6 +15,10 @@ interface ISessionData {
   questionTitle: string;
   chosenAnswer: string;
   flips: number;
+  session: string;
+  device: string;
+  submission_timestamp: string;
+  isEyeTracked: boolean;
 }
 
 export const $sessionData = atom<ISessionData[]>([]);
