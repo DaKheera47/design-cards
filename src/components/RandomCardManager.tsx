@@ -115,9 +115,11 @@ const RandomCardManager = ({ cards }: Props) => {
 
           {activeCardIdx !== null && (
             <>
-              <h2>
-                Current Card - {randomisedCards[activeCardIdx]?.data?.title}
-              </h2>
+              {randomisedCards[activeCardIdx] && (
+                <h2>
+                  Current Card - {randomisedCards[activeCardIdx]?.data?.title}
+                </h2>
+              )}
 
               <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
                 {randomisedCards.map((card, index) => (
