@@ -4,9 +4,11 @@ import { toast } from "@/components/ui/use-toast";
 import {
   $chosenDevice,
   $chosenSession,
+  $flips,
   $isEyeTracked,
   $isSessionEnded,
   $isSessionStarted,
+  $sessionData,
 } from "@/stores/sessionStore";
 import { useStore } from "@nanostores/react";
 import type { CollectionEntry } from "astro:content";
@@ -32,6 +34,8 @@ const RandomCardManager = ({ cards }: Props) => {
   const isEyeTracked = useStore($isEyeTracked);
   const chosenDevice = useStore($chosenDevice);
   const chosenSession = useStore($chosenSession);
+  const sessionAnswers = useStore($sessionData);
+  const flips = useStore($flips);
 
   useEffect(() => {
     setRandomisedCards(cards.sort(() => Math.random() - 0.5));
@@ -52,10 +56,21 @@ const RandomCardManager = ({ cards }: Props) => {
     setCardFlipTimer(value);
   };
 
-  const handleDialogClose = () => {
+  const handleDialogClose = (chosenAnswer: "yes" | "no" | "unsure") => {
     setIsDialogOpen(false);
+
     setActiveCardIdx((activeCardIdx) => {
       const nextIdx = activeCardIdx + 1;
+
+      $sessionData.set([
+        ...sessionAnswers,
+        {
+          questionTitle: randomisedCards[activeCardIdx].data.title ?? "",
+          chosenAnswer,
+          flips,
+        },
+      ]);
+
       if (nextIdx < randomisedCards.length) {
         return nextIdx;
       }

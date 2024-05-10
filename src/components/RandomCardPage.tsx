@@ -1,5 +1,9 @@
 import { Toaster } from "@/components/ui/toaster";
-import { $isSessionEnded, $isSessionStarted } from "@/stores/sessionStore";
+import {
+  $isSessionEnded,
+  $isSessionStarted,
+  $sessionData,
+} from "@/stores/sessionStore";
 import { useStore } from "@nanostores/react";
 import type { CollectionEntry } from "astro:content";
 import RandomCardManager from "./RandomCardManager";
@@ -15,6 +19,8 @@ const RandomCardPage = ({ cards }: Props) => {
   // render the card with a switch for is eye tracked, and a session dropdown, and a device number dropdown
   const isSessionStarted = useStore($isSessionStarted);
   const isSessionEnded = useStore($isSessionEnded);
+  const sessionData = useStore($sessionData);
+  console.log("Session Data", sessionData);
 
   return (
     <>

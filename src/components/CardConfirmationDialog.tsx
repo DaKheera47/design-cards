@@ -13,7 +13,7 @@ type Props = {
   setIsOpen: (isOpen: boolean) => void;
   title?: string;
   description?: string;
-  onClose: () => void;
+  onClose: (chosenAnswer: "yes" | "no" | "unsure") => void;
 };
 
 // Helper function to shuffle an array
@@ -34,7 +34,7 @@ export default function CardConfirmationDialog({
   onClose,
 }: Props) {
   const buttons = useMemo(
-    () => [{ label: "Yes" }, { label: "No" }, { label: "Unsure" }],
+    () => [{ label: "yes" }, { label: "no" }, { label: "unsure" }],
     [setIsOpen],
   );
 
@@ -55,12 +55,26 @@ export default function CardConfirmationDialog({
 
         <div className="fixed inset-0 flex w-screen items-center justify-center p-4">
           <DialogPanel className="max-w-lg space-y-4 rounded-md border bg-white p-12">
-            {title && <DialogTitle className="font-bold">{title}</DialogTitle>}
-            {description && <Description>{description}</Description>}
+            {title && (
+              <DialogTitle className="font-bold capitalize">
+                {title}
+              </DialogTitle>
+            )}
+
+            {description && (
+              <Description className="capitalize">{description}</Description>
+            )}
 
             <div className="grid grid-cols-3 gap-4">
               {shuffleArray(buttons).map(({ label }) => (
-                <Button variant="outline" key={label} onClick={onClose}>
+                <Button
+                  variant="outline"
+                  key={label}
+                  onClick={() => {
+                    setIsOpen(false);
+                    onClose(label as "yes" | "no" | "unsure");
+                  }}
+                >
                   {label}
                 </Button>
               ))}

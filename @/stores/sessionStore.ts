@@ -10,3 +10,13 @@ export const $chosenDevice = atom<string | undefined>(undefined);
 export const $isSessionStarted = atom(false);
 
 export const $isSessionEnded = atom(false);
+
+interface ISessionData {
+  questionTitle: string;
+  chosenAnswer: string;
+  flips: number;
+}
+
+export const $sessionData = atom<ISessionData[]>([]);
+
+export const $flips = atom(0);
