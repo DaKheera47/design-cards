@@ -8,3 +8,5 @@ export const $chosenSession = atom<string | undefined>(undefined);
 export const $chosenDevice = atom<string | undefined>(undefined);
 
 export const $isSessionStarted = atom(false);
+
+export const $isSessionEnded = atom(false);
