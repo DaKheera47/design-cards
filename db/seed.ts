@@ -8,12 +8,14 @@ export default async function () {
       device_identifier: "s1.d1",
       timeStarted: new Date(),
       isEyeTracked: true,
+      session_duration: 1000,
     },
     {
       id: 2,
       device_identifier: "s1.d1",
       timeStarted: new Date(),
       isEyeTracked: false,
+      session_duration: 10000,
     },
   ]);
 
@@ -26,6 +28,8 @@ export default async function () {
       flips: 2,
       submission_timestamp: new Date(),
       card_idx: 1,
+      num_flips: 2,
+      starting_timestamp: new Date(),
     },
     {
       id: 2,
@@ -35,6 +39,8 @@ export default async function () {
       flips: 5,
       submission_timestamp: new Date(),
       card_idx: 2,
+      num_flips: 5,
+      starting_timestamp: new Date(),
     },
   ]);
 }
