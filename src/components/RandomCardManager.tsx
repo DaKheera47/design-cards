@@ -65,7 +65,7 @@ const RandomCardManager = ({ cards }: Props) => {
       $sessionData.set([
         ...sessionAnswers,
         {
-          questionTitle: randomisedCards[activeCardIdx].data.title ?? "",
+          cardTitle: randomisedCards[activeCardIdx].data.title ?? "",
           chosenAnswer,
           flips,
           session: chosenSession ?? "",

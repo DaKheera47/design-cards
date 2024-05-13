@@ -12,7 +12,7 @@ export const $isSessionStarted = atom(false);
 export const $isSessionEnded = atom(false);
 
 interface ISessionData {
-  questionTitle: string;
+  cardTitle: string;
   chosenAnswer: string;
   flips: number;
   session: string;
