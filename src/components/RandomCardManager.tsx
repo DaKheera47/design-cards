@@ -16,6 +16,7 @@ import type { CollectionEntry } from "astro:content";
 import { useEffect, useState } from "react";
 import CardConfirmationDialog from "./CardConfirmationDialog";
 import FlippyCard from "./FlippyCard";
+import { $enableDebug } from "@/stores/debugStore";
 
 type TCard = CollectionEntry<"flippableCards">;
 
@@ -28,7 +29,6 @@ const DEFAULT_CARD_FLIP_TIMER = 30000;
 const RandomCardManager = ({ cards }: Props) => {
   const [activeCardIdx, setActiveCardIdx] = useState(0);
   const [randomisedCards, setRandomisedCards] = useState<TCard[]>([]);
-  const [enableDebug, setEnableDebug] = useState(false);
   const [cardFlipTimer, setCardFlipTimer] = useState(DEFAULT_CARD_FLIP_TIMER);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const isSessionEnded = useStore($isSessionEnded);
@@ -38,6 +38,7 @@ const RandomCardManager = ({ cards }: Props) => {
   const sessionData = useStore($sessionData);
   const flips = useStore($flips);
   const start_timestamp = useStore($start_timestamp);
+  const enableDebug = useStore($enableDebug);
 
   // randomise the cards on mount
   useEffect(() => {
@@ -135,7 +136,12 @@ const RandomCardManager = ({ cards }: Props) => {
     <>
       <div className="flex space-x-4">
         <h1>Enable Debug Mode</h1>
-        <Switch checked={enableDebug} onCheckedChange={setEnableDebug} />
+        <Switch
+          checked={enableDebug}
+          onCheckedChange={() => {
+            $enableDebug.set(!enableDebug);
+          }}
+        />
       </div>
 
       {enableDebug && (

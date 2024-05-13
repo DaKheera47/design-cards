@@ -1,6 +1,8 @@
 import { Button, buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { $enableDebug } from "@/stores/debugStore";
 import { $flips, type IFlips } from "@/stores/sessionStore";
+import { useStore } from "@nanostores/react";
 import { useEffect, useState } from "react";
 
 type Props = {
@@ -14,6 +16,7 @@ type Props = {
 export default function FlippyCard({ title, imageFront, imageBack }: Props) {
   const [isFlipped, setIsFlipped] = useState(false);
   const [flips, setFlips] = useState<IFlips[]>([]);
+  const enableDebug = useStore($enableDebug);
 
   //* this is really really bad practice because of the state setting the state, but it works
   //* we want it to reset the local state when the key outside changes, but also tell us what the number of flips were on the outside (we're using nanostores)
@@ -27,7 +30,7 @@ export default function FlippyCard({ title, imageFront, imageBack }: Props) {
   };
 
   return (
-    <div className="mx-auto max-w-2xl text-center">
+    <div className="mx-auto max-w-2xl pb-16 text-center">
       <p>
         Currently showing{" "}
         <span className="font-bold">{!isFlipped ? "Front" : "Back"}</span> of{" "}
@@ -64,10 +67,12 @@ export default function FlippyCard({ title, imageFront, imageBack }: Props) {
         </div>
       </div>
 
-      <div className="flex w-full justify-between">
-        <a className={buttonVariants({ variant: "secondary" })} href="/">
-          Back to home
-        </a>
+      <div className="flex w-full justify-center space-x-4">
+        {enableDebug && (
+          <a className={buttonVariants({ variant: "secondary" })} href="/">
+            Back to home
+          </a>
+        )}
 
         <Button onClick={handleClick}>
           {isFlipped ? "Show Front" : "Show Back"}
