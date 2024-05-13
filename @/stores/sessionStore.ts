@@ -19,6 +19,7 @@ interface ISessionData {
   device: string;
   submission_timestamp: string;
   isEyeTracked: boolean;
+  cardIdx: number;
 }
 
 export const $sessionData = atom<ISessionData[]>([]);

@@ -72,6 +72,7 @@ const RandomCardManager = ({ cards }: Props) => {
           device: chosenDevice ?? "",
           submission_timestamp: new Date().toISOString(),
           isEyeTracked,
+          cardIdx: activeCardIdx,
         },
       ]);
 

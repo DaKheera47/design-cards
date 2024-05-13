@@ -20,7 +20,7 @@ const RandomCardPage = ({ cards }: Props) => {
   const isSessionStarted = useStore($isSessionStarted);
   const isSessionEnded = useStore($isSessionEnded);
   const sessionData = useStore($sessionData);
-  console.log("Session Data", sessionData);
+  console.table(sessionData);
 
   return (
     <>
