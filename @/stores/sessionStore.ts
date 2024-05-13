@@ -11,7 +11,7 @@ export const $isSessionStarted = atom(false);
 
 export const $isSessionEnded = atom(false);
 
-interface ISessionData {
+export interface ISessionData {
   cardTitle: string;
   chosenAnswer: string;
   flips: number;

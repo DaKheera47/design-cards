@@ -1,7 +1,9 @@
 import react from "@astrojs/react";
 import tailwind from "@astrojs/tailwind";
-import vercel from "@astrojs/vercel/static";
+import vercel from "@astrojs/vercel/serverless";
 import { defineConfig } from "astro/config";
+
+import db from "@astrojs/db";
 
 // https://astro.build/config
 export default defineConfig({
@@ -10,8 +12,9 @@ export default defineConfig({
     tailwind({
       applyBaseStyles: false,
     }),
+    db(),
   ],
-  output: "static",
+  output: "server",
   adapter: vercel({
     imageService: true,
   }),

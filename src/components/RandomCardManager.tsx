@@ -34,13 +34,15 @@ const RandomCardManager = ({ cards }: Props) => {
   const isEyeTracked = useStore($isEyeTracked);
   const chosenDevice = useStore($chosenDevice);
   const chosenSession = useStore($chosenSession);
-  const sessionAnswers = useStore($sessionData);
+  const sessionData = useStore($sessionData);
   const flips = useStore($flips);
 
+  // randomise the cards on mount
   useEffect(() => {
     setRandomisedCards(cards.sort(() => Math.random() - 0.5));
   }, []);
 
+  // show the dialog after the card flip timer
   useEffect(() => {
     const intervalId = setInterval(() => {
       setIsDialogOpen(true);
@@ -49,6 +51,7 @@ const RandomCardManager = ({ cards }: Props) => {
     return () => clearInterval(intervalId);
   }, [activeCardIdx, cardFlipTimer, randomisedCards]);
 
+  // handle the card flip timer change in debug mode
   const handleCardFlipTimerChange = (
     e: React.ChangeEvent<HTMLInputElement>,
   ) => {
@@ -56,14 +59,19 @@ const RandomCardManager = ({ cards }: Props) => {
     setCardFlipTimer(value);
   };
 
+  // called when the user chooses an answer
   const handleDialogClose = (chosenAnswer: "yes" | "no" | "unsure") => {
     setIsDialogOpen(false);
 
     setActiveCardIdx((activeCardIdx) => {
       const nextIdx = activeCardIdx + 1;
 
+      // regex to get only the numbers from the session name
+      const sessionNumber = chosenSession?.match(/\d+/g);
+      const deviceNumber = chosenDevice?.match(/\d+/g);
+
       $sessionData.set([
-        ...sessionAnswers,
+        ...sessionData,
         {
           cardTitle: randomisedCards[activeCardIdx].data.title ?? "",
           chosenAnswer,
@@ -84,10 +92,6 @@ const RandomCardManager = ({ cards }: Props) => {
       $isSessionEnded.set(true);
       console.log("Session Ended", isSessionEnded);
 
-      // regex to get only the numbers from the session name
-      const sessionNumber = chosenSession?.match(/\d+/g);
-      const deviceNumber = chosenDevice?.match(/\d+/g);
-
       toast({
         title: "Session Ended.",
         description: `Thanks for participating. ${
@@ -98,7 +102,6 @@ const RandomCardManager = ({ cards }: Props) => {
 
       // reset the session
       $isSessionStarted.set(false);
-      $isSessionEnded.set(false);
 
       return -1;
     });

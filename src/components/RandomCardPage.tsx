@@ -6,6 +6,7 @@ import {
 } from "@/stores/sessionStore";
 import { useStore } from "@nanostores/react";
 import type { CollectionEntry } from "astro:content";
+import { useEffect } from "react";
 import RandomCardManager from "./RandomCardManager";
 import SessionInputCard from "./SessionInputCard";
 
@@ -21,6 +22,25 @@ const RandomCardPage = ({ cards }: Props) => {
   const isSessionEnded = useStore($isSessionEnded);
   const sessionData = useStore($sessionData);
   console.table(sessionData);
+
+  // when session ends, commit the session data to the database
+  useEffect(() => {
+    console.log("isSessionEnded", isSessionEnded);
+    if (isSessionEnded) {
+      // make a call to /api/sessions with the data and print response
+      fetch("/api/sessions", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(sessionData),
+      })
+        .then((res) => res.json())
+        .then((data) => console.log(data));
+    }
+
+    $isSessionEnded.set(false);
+  }, [isSessionEnded]);
 
   return (
     <>
