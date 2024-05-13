@@ -1,4 +1,4 @@
-import { defineDb, defineTable, column } from "astro:db";
+import { column, defineDb, defineTable } from "astro:db";
 
 const Session = defineTable({
   columns: {
@@ -6,6 +6,8 @@ const Session = defineTable({
     device_identifier: column.text(),
     timeStarted: column.date(),
     isEyeTracked: column.boolean(),
+    // in ms
+    session_duration: column.number(),
   },
 });
 
@@ -17,6 +19,7 @@ const SessionEvent = defineTable({
     chosen_answer: column.text(),
     flips: column.json(),
     num_flips: column.number(),
+    starting_timestamp: column.date(),
     submission_timestamp: column.date(),
     card_idx: column.number(),
     // time_spent_front: column.number(),

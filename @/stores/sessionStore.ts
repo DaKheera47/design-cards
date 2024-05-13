@@ -24,9 +24,12 @@ export interface ISessionData {
   flips: IFlips[];
   session: string;
   device: string;
+  starting_timestamp: string;
   submission_timestamp: string;
   isEyeTracked: boolean;
   cardIdx: number;
 }
 
 export const $sessionData = atom<ISessionData[]>([]);
+
+export const $start_timestamp = atom<string | undefined>(undefined);

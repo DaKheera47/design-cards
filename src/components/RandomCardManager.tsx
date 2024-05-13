@@ -9,6 +9,7 @@ import {
   $isSessionEnded,
   $isSessionStarted,
   $sessionData,
+  $start_timestamp,
 } from "@/stores/sessionStore";
 import { useStore } from "@nanostores/react";
 import type { CollectionEntry } from "astro:content";
@@ -36,10 +37,14 @@ const RandomCardManager = ({ cards }: Props) => {
   const chosenSession = useStore($chosenSession);
   const sessionData = useStore($sessionData);
   const flips = useStore($flips);
+  const start_timestamp = useStore($start_timestamp);
 
   // randomise the cards on mount
   useEffect(() => {
     setRandomisedCards(cards.sort(() => Math.random() - 0.5));
+
+    // set the start timestamp
+    $start_timestamp.set(new Date().toISOString());
   }, []);
 
   // show the dialog after the card flip timer
@@ -70,6 +75,15 @@ const RandomCardManager = ({ cards }: Props) => {
       const sessionNumber = chosenSession?.match(/\d+/g);
       const deviceNumber = chosenDevice?.match(/\d+/g);
 
+      let tempStart: any = "";
+      if (sessionData.length === 0) {
+        console.log("Session Data is empty");
+        console.log(sessionData);
+        tempStart = start_timestamp;
+      } else {
+        tempStart = sessionData[sessionData.length - 1].submission_timestamp;
+      }
+
       $sessionData.set([
         ...sessionData,
         {
@@ -78,6 +92,7 @@ const RandomCardManager = ({ cards }: Props) => {
           flips,
           session: chosenSession ?? "",
           device: chosenDevice ?? "",
+          starting_timestamp: tempStart,
           submission_timestamp: new Date().toISOString(),
           isEyeTracked,
           cardIdx: activeCardIdx,
