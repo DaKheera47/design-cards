@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react";
-import { cn } from "@/lib/utils";
 import { Button, buttonVariants } from "@/components/ui/button";
-import { $flips } from "@/stores/sessionStore";
+import { cn } from "@/lib/utils";
+import { $flips, type IFlips } from "@/stores/sessionStore";
+import { useEffect, useState } from "react";
 
 type Props = {
   title?: string | undefined;
@@ -13,16 +13,16 @@ type Props = {
 
 export default function FlippyCard({ title, imageFront, imageBack }: Props) {
   const [isFlipped, setIsFlipped] = useState(false);
-  const [flips, setFlips] = useState(0);
+  const [flips, setFlips] = useState<IFlips[]>([]);
 
-  //* this is really really bad practice, but it works
+  //* this is really really bad practice because of the state setting the state, but it works
   //* we want it to reset the local state when the key outside changes, but also tell us what the number of flips were on the outside (we're using nanostores)
   useEffect(() => {
     $flips.set(flips);
   }, [flips]);
 
   const handleClick = () => {
-    setFlips((prevFlips) => prevFlips + 1);
+    setFlips([...flips, { timestamp: new Date().toISOString() }]);
     setIsFlipped(!isFlipped);
   };
 

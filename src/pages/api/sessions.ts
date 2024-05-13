@@ -16,8 +16,6 @@ const isBodyValid = (body: ISessionData[] | undefined) => {
     return false;
   }
 
-  console.log(body);
-
   // make sure body is an array and length is greater than 0
   if (!Array.isArray(body) || body.length === 0) {
     console.error("invalid array");
@@ -92,6 +90,7 @@ export const POST: APIRoute = async ({ request }) => {
         card_title: event.cardTitle,
         chosen_answer: event.chosenAnswer,
         flips: event.flips,
+        num_flips: event.flips.length,
         session_id: newSessionId[0].id,
         submission_timestamp: new Date(event.submission_timestamp),
       }),

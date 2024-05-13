@@ -11,10 +11,17 @@ export const $isSessionStarted = atom(false);
 
 export const $isSessionEnded = atom(false);
 
+// this means that the length of the array will be the number of flips
+export interface IFlips {
+  timestamp: string;
+}
+
+export const $flips = atom<IFlips[]>([]);
+
 export interface ISessionData {
   cardTitle: string;
   chosenAnswer: string;
-  flips: number;
+  flips: IFlips[];
   session: string;
   device: string;
   submission_timestamp: string;
@@ -23,5 +30,3 @@ export interface ISessionData {
 }
 
 export const $sessionData = atom<ISessionData[]>([]);
-
-export const $flips = atom(0);
