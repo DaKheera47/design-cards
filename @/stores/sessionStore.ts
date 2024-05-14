@@ -17,6 +17,8 @@ export interface IFlips {
 }
 
 export const $flips = atom<IFlips[]>([]);
+export const $timeSpentFront = atom(0);
+export const $timeSpentBack = atom(0);
 
 export interface ISessionData {
   cardTitle: string;
@@ -28,6 +30,8 @@ export interface ISessionData {
   submission_timestamp: string;
   isEyeTracked: boolean;
   cardIdx: number;
+  time_spent_front: number;
+  time_spent_back: number;
 }
 
 export const $sessionData = atom<ISessionData[]>([]);

@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import { $sessionData } from "@/stores/sessionStore";
 import {
   Description,
   Dialog,
@@ -6,6 +7,7 @@ import {
   DialogTitle,
   Transition,
 } from "@headlessui/react";
+import { useStore } from "@nanostores/react";
 import { useMemo } from "react";
 
 type Props = {
@@ -37,6 +39,10 @@ export default function CardConfirmationDialog({
     () => [{ label: "yes" }, { label: "no" }, { label: "unsure" }],
     [setIsOpen],
   );
+  const sessionData = useStore($sessionData);
+
+  // memoize the shuffled array, and change when the card data changes
+  const shuffledArray = useMemo(() => shuffleArray(buttons), [sessionData]);
 
   return (
     <Transition
@@ -66,7 +72,7 @@ export default function CardConfirmationDialog({
             )}
 
             <div className="grid grid-cols-3 gap-4">
-              {shuffleArray(buttons).map(({ label }) => (
+              {shuffledArray.map(({ label }) => (
                 <Button
                   variant="outline"
                   key={label}

@@ -1,5 +1,4 @@
 ---
-import { Button, buttonVariants } from "@/components/ui/button";
 import { getCollection } from "astro:content";
 import FlippyCard from "../../components/FlippyCard.tsx";
 import Layout from "../../layouts/Layout.astro";
@@ -20,6 +19,7 @@ const { entry } = Astro.props;
     <FlippyCard
       client:load
       {...entry.data}
+      isDialogOpen={false}
     />
   </section>
 </Layout>

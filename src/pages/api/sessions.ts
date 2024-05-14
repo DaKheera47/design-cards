@@ -135,6 +135,8 @@ export const POST: APIRoute = async ({ request }) => {
         session_id: newSessionId[0].id,
         starting_timestamp: new Date(event.starting_timestamp),
         submission_timestamp: new Date(event.submission_timestamp),
+        time_spent_back: event.time_spent_back,
+        time_spent_front: event.time_spent_front,
       }),
     );
   });

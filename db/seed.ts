@@ -30,6 +30,8 @@ export default async function () {
       card_idx: 1,
       num_flips: 2,
       starting_timestamp: new Date(),
+      time_spent_back: 1000,
+      time_spent_front: 1000,
     },
     {
       id: 2,
@@ -41,6 +43,8 @@ export default async function () {
       card_idx: 2,
       num_flips: 5,
       starting_timestamp: new Date(),
+      time_spent_back: 1000,
+      time_spent_front: 1000,
     },
   ]);
 }

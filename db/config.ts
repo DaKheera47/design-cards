@@ -22,8 +22,8 @@ const SessionEvent = defineTable({
     starting_timestamp: column.date(),
     submission_timestamp: column.date(),
     card_idx: column.number(),
-    // time_spent_front: column.number(),
-    // time_spent_back: column.number(),
+    time_spent_front: column.number(),
+    time_spent_back: column.number(),
   },
 });
 

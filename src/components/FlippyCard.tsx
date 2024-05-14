@@ -1,31 +1,100 @@
 import { Button, buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { $enableDebug } from "@/stores/debugStore";
-import { $flips, type IFlips } from "@/stores/sessionStore";
+import {
+  $flips,
+  $timeSpentBack,
+  $timeSpentFront,
+  type IFlips,
+} from "@/stores/sessionStore";
 import { useStore } from "@nanostores/react";
-import { useEffect, useState } from "react";
+import type { CollectionEntry } from "astro:content";
+import { useEffect, useRef, useState } from "react";
 
-type Props = {
-  title?: string | undefined;
-  body?: string | undefined;
-  flippable?: boolean | undefined;
-  imageFront: ImageMetadata;
-  imageBack?: ImageMetadata | undefined;
+type TCardData = CollectionEntry<"flippableCards">["data"] & {
+  isDialogOpen: boolean;
 };
 
-export default function FlippyCard({ title, imageFront, imageBack }: Props) {
+export default function FlippyCard({
+  title,
+  imageFront,
+  imageBack,
+  isDialogOpen,
+}: TCardData) {
   const [isFlipped, setIsFlipped] = useState(false);
   const [flips, setFlips] = useState<IFlips[]>([]);
+  const [timeSpentFront, setTimeSpentFront] = useState(0);
+  const [timeSpentBack, setTimeSpentBack] = useState(0);
+  const startTime = useRef(new Date());
   const enableDebug = useStore($enableDebug);
+  const timeFrontStore = useStore($timeSpentFront);
+  const timeBackStore = useStore($timeSpentBack);
 
-  //* this is really really bad practice because of the state setting the state, but it works
-  //* we want it to reset the local state when the key outside changes, but also tell us what the number of flips were on the outside (we're using nanostores)
   useEffect(() => {
     $flips.set(flips);
   }, [flips]);
 
+  useEffect(() => {
+    if (isDialogOpen) return;
+
+    // additional time spent on front, this means that the combined front and back will be equal to the timer selected
+    let extraTime = 0;
+    if (timeSpentFront > 0) extraTime = 1000;
+
+    $timeSpentFront.set(timeSpentFront + extraTime);
+  }, [timeSpentFront]);
+
+  useEffect(() => {
+    if (isDialogOpen) return;
+
+    $timeSpentBack.set(timeSpentBack);
+  }, [timeSpentBack]);
+
+  const calculateTimeSpent = (flips: IFlips[]) => {
+    if (isDialogOpen) return;
+
+    let frontTime = 0;
+    let backTime = 0;
+    let lastFlipTime = new Date(startTime.current).getTime();
+    let currentStateIsFront = true; // Assuming the initial state is front
+
+    flips.forEach((flip) => {
+      const flipTime = new Date(flip.timestamp).getTime();
+      if (currentStateIsFront) {
+        frontTime += flipTime - lastFlipTime;
+      } else {
+        backTime += flipTime - lastFlipTime;
+      }
+      lastFlipTime = flipTime;
+      currentStateIsFront = !currentStateIsFront;
+    });
+
+    // Calculate time from the last flip to now
+    const now = new Date().getTime();
+    if (currentStateIsFront) {
+      frontTime += now - lastFlipTime;
+    } else {
+      backTime += now - lastFlipTime;
+    }
+
+    setTimeSpentFront(frontTime);
+    setTimeSpentBack(backTime);
+  };
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      // don't calculate time spent if the dialog is open
+      if (isDialogOpen) return;
+
+      calculateTimeSpent(flips);
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, [flips]);
+
   const handleClick = () => {
-    setFlips([...flips, { timestamp: new Date().toISOString() }]);
+    const newFlip = { timestamp: new Date().toISOString() };
+    setFlips([...flips, newFlip]);
     setIsFlipped(!isFlipped);
   };
 
@@ -77,6 +146,11 @@ export default function FlippyCard({ title, imageFront, imageBack }: Props) {
         <Button onClick={handleClick}>
           {isFlipped ? "Show Front" : "Show Back"}
         </Button>
+      </div>
+
+      <div className="mt-4">
+        <p>Time spent on front: {timeFrontStore} seconds</p>
+        <p>Time spent on back: {timeBackStore} seconds</p>
       </div>
     </div>
   );

@@ -1,6 +1,7 @@
 import { Input } from "@/components/ui/input";
 import { Switch } from "@/components/ui/switch";
 import { toast } from "@/components/ui/use-toast";
+import { $enableDebug } from "@/stores/debugStore";
 import {
   $chosenDevice,
   $chosenSession,
@@ -10,13 +11,14 @@ import {
   $isSessionStarted,
   $sessionData,
   $start_timestamp,
+  $timeSpentBack,
+  $timeSpentFront,
 } from "@/stores/sessionStore";
 import { useStore } from "@nanostores/react";
 import type { CollectionEntry } from "astro:content";
 import { useEffect, useState } from "react";
 import CardConfirmationDialog from "./CardConfirmationDialog";
 import FlippyCard from "./FlippyCard";
-import { $enableDebug } from "@/stores/debugStore";
 
 type TCard = CollectionEntry<"flippableCards">;
 
@@ -39,6 +41,8 @@ const RandomCardManager = ({ cards }: Props) => {
   const flips = useStore($flips);
   const start_timestamp = useStore($start_timestamp);
   const enableDebug = useStore($enableDebug);
+  const timeSpentFront = useStore($timeSpentFront);
+  const timeSpentBack = useStore($timeSpentBack);
 
   // randomise the cards on mount
   useEffect(() => {
@@ -97,6 +101,8 @@ const RandomCardManager = ({ cards }: Props) => {
           submission_timestamp: new Date().toISOString(),
           isEyeTracked,
           cardIdx: activeCardIdx,
+          time_spent_front: timeSpentFront,
+          time_spent_back: timeSpentBack,
         },
       ]);
 
@@ -185,6 +191,7 @@ const RandomCardManager = ({ cards }: Props) => {
       <FlippyCard
         key={randomisedCards[activeCardIdx].id}
         {...randomisedCards[activeCardIdx].data}
+        isDialogOpen={isDialogOpen}
       />
 
       <CardConfirmationDialog
