@@ -1,6 +1,8 @@
 {
     "title": "Function_ImageRec",
     "body": "",
+    "num_words_front": 2,
+    "num_words_back": 25,
     "imageFront": "/src/assets/IOToys/Function_ImageRec-front.webp",
     "imageBack": "/src/assets/IOToys/Function_ImageRec-back.webp",
     "flippable": true

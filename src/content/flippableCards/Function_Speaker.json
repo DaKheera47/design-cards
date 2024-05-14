@@ -1,6 +1,8 @@
 {
     "title": "Function_Speaker",
     "body": "",
+    "num_words_front": 24,
+    "num_words_back": 24,
     "imageFront": "/src/assets/IOToys/Function_Speaker-front.webp",
     "imageBack": "/src/assets/IOToys/Function_Speaker-back.webp",
     "flippable": true

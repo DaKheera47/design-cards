@@ -1,6 +1,8 @@
 {
     "title": "Function_VR",
     "body": "",
+    "num_words_front": 2,
+    "num_words_back": 17,
     "imageFront": "/src/assets/IOToys/Function_VR-front.webp",
     "imageBack": "/src/assets/IOToys/Function_VR-back.webp",
     "flippable": true
