@@ -1,9 +1,9 @@
 ---
-import Layout from "../layouts/Layout.astro";
+import Layout from "../../layouts/Layout.astro";
 
 import { getCollection } from "astro:content";
-const flippableCards = await getCollection("flippableCards");
 import RandomCardPage from "src/components/RandomCardPage";
+const flippableCards = await getCollection("flippableCards");
 ---
 
 <Layout title="Start your randomised experience">

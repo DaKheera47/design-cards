@@ -2,24 +2,16 @@
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
-interface Props {
-  imageFront: ImageMetadata;
-  title?: string | undefined;
-  body?: string | undefined;
-  imageBack?: ImageMetadata | undefined;
-  flippable?: boolean | undefined;
-}
-
-const { title, body } = Astro.props;
+const { title, body, href } = Astro.props;
 ---
 
 <a
   class={cn(buttonVariants({ variant: "outline" }), "border")}
-  href=`/cards/${title}`
+  href={href}
 >
-  <h4>
+  <span>
     {title}
-  </h4>
+  </span>
 
-  {body && <p>{body}</p>}
+  {body && <span>{body}</span>}
 </a>
