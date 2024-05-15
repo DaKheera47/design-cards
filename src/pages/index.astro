@@ -2,10 +2,6 @@
 import { buttonVariants } from "@/components/ui/button";
 import Layout from "../layouts/Layout.astro";
 
-import { getCollection } from "astro:content";
-import IndexItem from "src/components/IndexItem.astro";
-const flippableCards = await getCollection("flippableCards");
-
 const sections = [
   {
     title: "Technology Cards",
@@ -43,11 +39,5 @@ const sections = [
         ))
       }
     </div>
-
-    <!-- <div
-      class="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4"
-    >
-      {flippableCards.map((card) => <IndexItem {...card.data} />)}
-    </div> -->
   </section>
 </Layout>

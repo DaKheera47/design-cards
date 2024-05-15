@@ -15,22 +15,23 @@ import {
   $timeSpentFront,
 } from "@/stores/sessionStore";
 import { useStore } from "@nanostores/react";
-import type { CollectionEntry } from "astro:content";
 import { useEffect, useState } from "react";
+import type { TCard, TOutputCard } from "src/cards";
 import CardConfirmationDialog from "./CardConfirmationDialog";
 import FlippyCard from "./FlippyCard";
 
-type TCard = CollectionEntry<"flippableCards">;
-
 type Props = {
   cards: TCard[];
+  outputCards: TOutputCard[];
 };
 
 const DEFAULT_CARD_FLIP_TIMER = 30000;
 
-const RandomCardManager = ({ cards }: Props) => {
+const RandomCardManager = ({ cards, outputCards }: Props) => {
   const [activeCardIdx, setActiveCardIdx] = useState(0);
-  const [randomisedCards, setRandomisedCards] = useState<TCard[]>([]);
+  const [randomisedCards, setRandomisedCards] = useState<
+    (TCard | TOutputCard)[]
+  >([]);
   const [cardFlipTimer, setCardFlipTimer] = useState(DEFAULT_CARD_FLIP_TIMER);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const isSessionEnded = useStore($isSessionEnded);
@@ -46,7 +47,10 @@ const RandomCardManager = ({ cards }: Props) => {
 
   // randomise the cards on mount
   useEffect(() => {
-    setRandomisedCards(cards.sort(() => Math.random() - 0.5));
+    setRandomisedCards([
+      ...cards.sort(() => Math.random() - 0.5),
+      ...outputCards.sort(() => Math.random() - 0.5),
+    ]);
 
     // set the start timestamp
     $start_timestamp.set(new Date().toISOString());
@@ -163,6 +167,11 @@ const RandomCardManager = ({ cards }: Props) => {
             />
           </div>
 
+          <div className="mt-4">
+            <p>Time spent on front: {timeSpentFront}ms</p>
+            <p>Time spent on back: {timeSpentBack}ms</p>
+          </div>
+
           {activeCardIdx !== null && (
             <>
               {randomisedCards[activeCardIdx] && (
@@ -190,7 +199,7 @@ const RandomCardManager = ({ cards }: Props) => {
 
       <FlippyCard
         key={randomisedCards[activeCardIdx].id}
-        {...randomisedCards[activeCardIdx].data}
+        {...randomisedCards[activeCardIdx]}
         isDialogOpen={isDialogOpen}
       />
 

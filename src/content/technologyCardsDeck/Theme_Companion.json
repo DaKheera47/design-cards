@@ -1,0 +1,9 @@
+{
+    "title": "Theme_Companion",
+    "body": "",
+    "num_words_front": 1,
+    "num_words_back": 24,
+    "imageFront": "/src/assets/IOToys/Theme_Companion-front.webp",
+    "imageBack": "/src/assets/IOToys/Theme_Companion-back.webp",
+    "flippable": true
+}

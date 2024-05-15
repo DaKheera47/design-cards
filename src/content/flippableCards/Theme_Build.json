@@ -1,9 +1,0 @@
-{
-    "title": "Theme_Build",
-    "body": "",
-    "num_words_front": 1,
-    "num_words_back": 25,
-    "imageFront": "/src/assets/IOToys/Theme_Build-front.webp",
-    "imageBack": "/src/assets/IOToys/Theme_Build-back.webp",
-    "flippable": true
-}

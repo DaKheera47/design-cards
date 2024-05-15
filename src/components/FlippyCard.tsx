@@ -8,27 +8,44 @@ import {
   type IFlips,
 } from "@/stores/sessionStore";
 import { useStore } from "@nanostores/react";
-import type { CollectionEntry } from "astro:content";
+import type { ImageMetadata } from "astro";
 import { useEffect, useRef, useState } from "react";
+import {
+  isTCard,
+  isTOutputCard,
+  type TCard,
+  type TOutputCard,
+} from "src/cards.d";
 
-type TCardData = CollectionEntry<"flippableCards">["data"] & {
+type FlippyCardProps = (TCard | TOutputCard) & {
   isDialogOpen: boolean;
 };
 
-export default function FlippyCard({
-  title,
-  imageFront,
-  imageBack,
-  isDialogOpen,
-}: TCardData) {
+export default function FlippyCard({ data, isDialogOpen }: FlippyCardProps) {
+  const { title } = data;
+
+  // imageFront may or may not exist
+  let image: ImageMetadata | undefined;
+
+  if (isTCard(data)) {
+    image = data.imageFront;
+  } else if (isTOutputCard(data)) {
+    image = data.image;
+  }
+
+  // imageBack may or may not exist
+  let imageBack: ImageMetadata | undefined;
+
+  if (isTCard(data)) {
+    imageBack = data.imageBack;
+  }
+
   const [isFlipped, setIsFlipped] = useState(false);
   const [flips, setFlips] = useState<IFlips[]>([]);
   const [timeSpentFront, setTimeSpentFront] = useState(0);
   const [timeSpentBack, setTimeSpentBack] = useState(0);
   const startTime = useRef(new Date());
   const enableDebug = useStore($enableDebug);
-  const timeFrontStore = useStore($timeSpentFront);
-  const timeBackStore = useStore($timeSpentBack);
 
   useEffect(() => {
     $flips.set(flips);
@@ -93,6 +110,8 @@ export default function FlippyCard({
   }, [flips]);
 
   const handleClick = () => {
+    if (!data.flippable) return;
+
     const newFlip = { timestamp: new Date().toISOString() };
     setFlips([...flips, newFlip]);
     setIsFlipped(!isFlipped);
@@ -102,7 +121,12 @@ export default function FlippyCard({
     <div className="mx-auto max-w-2xl pb-16 text-center">
       <p>
         Currently showing{" "}
-        <span className="font-bold">{!isFlipped ? "Front" : "Back"}</span> of{" "}
+        {data.flippable && (
+          <>
+            <span className="font-bold">{!isFlipped ? "Front" : "Back"}</span>{" "}
+            of{" "}
+          </>
+        )}
         <span className="font-bold">{title}</span>
       </p>
 
@@ -115,11 +139,13 @@ export default function FlippyCard({
           <div className="front rounded-lg border shadow-md">
             <p className="text-center font-bold">Front</p>
 
-            <img
-              src={imageFront.src}
-              alt={title || ""}
-              className="h-[95%] w-full object-contain"
-            />
+            {image && (
+              <img
+                src={image.src}
+                alt={title || ""}
+                className="h-[95%] w-full object-contain"
+              />
+            )}
           </div>
 
           <div className="back rounded-lg border shadow-md">
@@ -143,14 +169,11 @@ export default function FlippyCard({
           </a>
         )}
 
-        <Button onClick={handleClick}>
-          {isFlipped ? "Show Front" : "Show Back"}
-        </Button>
-      </div>
-
-      <div className="mt-4">
-        <p>Time spent on front: {timeFrontStore} seconds</p>
-        <p>Time spent on back: {timeBackStore} seconds</p>
+        {data.flippable && (
+          <Button onClick={handleClick}>
+            {isFlipped ? "Show Front" : "Show Back"}
+          </Button>
+        )}
       </div>
     </div>
   );

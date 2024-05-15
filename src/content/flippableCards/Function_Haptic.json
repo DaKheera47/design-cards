@@ -1,9 +1,0 @@
-{
-    "title": "Function_Haptic",
-    "body": "",
-    "num_words_front": 2,
-    "num_words_back": 25,
-    "imageFront": "/src/assets/IOToys/Function_Haptic-front.webp",
-    "imageBack": "/src/assets/IOToys/Function_Haptic-back.webp",
-    "flippable": true
-}

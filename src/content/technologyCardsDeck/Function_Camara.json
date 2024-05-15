@@ -1,0 +1,9 @@
+{
+    "title": "Function_Camara",
+    "body": "",
+    "num_words_front": 21,
+    "num_words_back": 21,
+    "imageFront": "/src/assets/IOToys/Function_Camara-front.webp",
+    "imageBack": "/src/assets/IOToys/Function_Camara-back.webp",
+    "flippable": true
+}

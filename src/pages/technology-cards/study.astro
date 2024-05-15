@@ -3,14 +3,16 @@ import Layout from "../../layouts/Layout.astro";
 
 import { getCollection } from "astro:content";
 import RandomCardPage from "src/components/RandomCardPage";
-const flippableCards = await getCollection("flippableCards");
+const technologyCardsDeck = await getCollection("technologyCardsDeck");
+const outputCards = await getCollection("technologyCardsOutput");
 ---
 
 <Layout title="Start your randomised experience">
   <section class="py-8">
     <RandomCardPage
       client:load
-      cards={flippableCards}
+      cards={technologyCardsDeck}
+      outputCards={outputCards}
     />
   </section>
 </Layout>

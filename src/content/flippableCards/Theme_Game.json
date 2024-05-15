@@ -1,9 +1,0 @@
-{
-    "title": "Theme_Game",
-    "body": "",
-    "num_words_front": 1,
-    "num_words_back": 27,
-    "imageFront": "/src/assets/IOToys/Theme_Game-front.webp",
-    "imageBack": "/src/assets/IOToys/Theme_Game-back.webp",
-    "flippable": true
-}

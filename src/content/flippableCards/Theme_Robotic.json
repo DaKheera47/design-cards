@@ -1,9 +1,0 @@
-{
-    "title": "Theme_Robotic",
-    "body": "",
-    "num_words_front": 1,
-    "num_words_back": 24,
-    "imageFront": "/src/assets/IOToys/Theme_Robotic-front.webp",
-    "imageBack": "/src/assets/IOToys/Theme_Robotic-back.webp",
-    "flippable": true
-}

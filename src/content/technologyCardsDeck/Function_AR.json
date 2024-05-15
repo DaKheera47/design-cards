@@ -1,0 +1,9 @@
+{
+    "title": "Function_AR",
+    "body": "",
+    "num_words_front": 2,
+    "num_words_back": 30,
+    "imageFront": "/src/assets/IOToys/Function_AR-front.webp",
+    "imageBack": "/src/assets/IOToys/Function_AR-back.webp",
+    "flippable": true
+}

@@ -1,9 +1,0 @@
-{
-    "title": "Function_Voicerecognition",
-    "body": "",
-    "num_words_front": 2,
-    "num_words_back": 23,
-    "imageFront": "/src/assets/IOToys/Function_Voicerecognition-front.webp",
-    "imageBack": "/src/assets/IOToys/Function_Voicerecognition-back.webp",
-    "flippable": true
-}

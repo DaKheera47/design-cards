@@ -1,0 +1,9 @@
+{
+    "title": "Theme_Pet",
+    "body": "",
+    "num_words_front": 30,
+    "num_words_back": 30,
+    "imageFront": "/src/assets/IOToys/Theme_Pet-front.webp",
+    "imageBack": "/src/assets/IOToys/Theme_Pet-back.webp",
+    "flippable": true
+}
