@@ -187,6 +187,8 @@ const RandomCardManager = ({ cards, outputCards }: Props) => {
                     style={{
                       fontWeight: index === activeCardIdx ? "bold" : "normal",
                     }}
+                    className="cursor-pointer hover:underline"
+                    onClick={() => setActiveCardIdx(index)}
                   >
                     {card.data.title}
                   </li>
