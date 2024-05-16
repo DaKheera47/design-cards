@@ -1,7 +1,7 @@
 import { z, defineCollection } from "astro:content";
 
 const technologyCardsDeck = defineCollection({
-  type: "data", // v2.5.0 and later
+  type: "data",
   schema: ({ image }) =>
     z.object({
       title: z.string().optional(),
@@ -15,7 +15,7 @@ const technologyCardsDeck = defineCollection({
 });
 
 const technologyCardsOutput = defineCollection({
-  type: "data", // v2.5.0 and later
+  type: "data",
   schema: ({ image }) =>
     z.object({
       title: z.string().optional(),
@@ -27,7 +27,7 @@ const technologyCardsOutput = defineCollection({
 });
 
 const magicCardsDeck = defineCollection({
-  type: "data", // v2.5.0 and later
+  type: "data",
   schema: ({ image }) =>
     z.object({
       title: z.string().optional(),
@@ -39,8 +39,21 @@ const magicCardsDeck = defineCollection({
     }),
 });
 
+const magicCardsOutput = defineCollection({
+  type: "data",
+  schema: ({ image }) =>
+    z.object({
+      title: z.string().optional(),
+      body: z.string().optional(),
+      image: image(),
+      flippable: z.boolean().optional(),
+      order: z.number().min(1),
+    }),
+});
+
 export const collections = {
   technologyCardsDeck,
   technologyCardsOutput,
   magicCardsDeck,
+  magicCardsOutput,
 };

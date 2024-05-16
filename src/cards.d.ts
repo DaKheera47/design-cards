@@ -6,8 +6,12 @@ export type TCard =
 export type TCardData =
   | CollectionEntry<"technologyCardsDeck">["data"]
   | CollectionEntry<"magicCardsDeck">["data"];
-export type TOutputCard = CollectionEntry<"technologyCardsOutput">;
-export type TOutputCardData = CollectionEntry<"technologyCardsOutput">["data"];
+export type TOutputCard =
+  | CollectionEntry<"technologyCardsOutput">
+  | CollectionEntry<"magicCardsOutput">;
+export type TOutputCardData =
+  | CollectionEntry<"technologyCardsOutput">["data"]
+  | CollectionEntry<"magicCardsOutput">["data"];
 
 // Type guards
 export function isTCard(data: TCardData | TOutputCardData): data is TCardData {

@@ -4,7 +4,7 @@ import Layout from "../../layouts/Layout.astro";
 import { getCollection } from "astro:content";
 import RandomCardPage from "src/components/RandomCardPage";
 const deckCards = await getCollection("magicCardsDeck");
-const outputCards = await getCollection("technologyCardsOutput");
+const outputCards = await getCollection("magicCardsOutput");
 ---
 
 <Layout title="Magic Cards Randomiser">
