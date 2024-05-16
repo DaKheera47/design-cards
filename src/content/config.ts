@@ -26,7 +26,21 @@ const technologyCardsOutput = defineCollection({
     }),
 });
 
+const magicCardsDeck = defineCollection({
+  type: "data", // v2.5.0 and later
+  schema: ({ image }) =>
+    z.object({
+      title: z.string().optional(),
+      body: z.string().optional(),
+      image: image(),
+      words: z.string().optional(),
+      flippable: z.boolean().optional(),
+      word_count: z.number().optional(),
+    }),
+});
+
 export const collections = {
   technologyCardsDeck,
   technologyCardsOutput,
+  magicCardsDeck,
 };

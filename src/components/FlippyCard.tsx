@@ -17,9 +17,7 @@ import {
   type TOutputCard,
 } from "src/cards.d";
 
-type FlippyCardProps = (TCard | TOutputCard) & {
-  isDialogOpen: boolean;
-};
+type FlippyCardProps = any;
 
 export default function FlippyCard({ data, isDialogOpen }: FlippyCardProps) {
   const { title } = data;
@@ -27,16 +25,18 @@ export default function FlippyCard({ data, isDialogOpen }: FlippyCardProps) {
   // imageFront may or may not exist
   let image: ImageMetadata | undefined;
 
-  if (isTCard(data)) {
+  if (data?.imageFront) {
     image = data.imageFront;
-  } else if (isTOutputCard(data)) {
+  } else {
     image = data.image;
+    console.log("image", image);
+    console.log("data", data);
   }
 
   // imageBack may or may not exist
   let imageBack: ImageMetadata | undefined;
 
-  if (isTCard(data)) {
+  if (data?.imageBack) {
     imageBack = data.imageBack;
   }
 
@@ -123,7 +123,9 @@ export default function FlippyCard({ data, isDialogOpen }: FlippyCardProps) {
         Currently showing{" "}
         {data.flippable && (
           <>
-            <span className="font-bold">{!isFlipped ? "Front" : "Back"}</span>{" "}
+            {data.flippable && (
+              <span className="font-bold">{!isFlipped ? "Front" : "Back"}</span>
+            )}
             of{" "}
           </>
         )}
@@ -137,7 +139,7 @@ export default function FlippyCard({ data, isDialogOpen }: FlippyCardProps) {
       >
         <div className="flipper">
           <div className="front rounded-lg border shadow-md">
-            <p className="text-center font-bold">Front</p>
+            {data.flippable && <p className="text-center font-bold">Front</p>}
 
             {image && (
               <img
@@ -149,7 +151,7 @@ export default function FlippyCard({ data, isDialogOpen }: FlippyCardProps) {
           </div>
 
           <div className="back rounded-lg border shadow-md">
-            <p className="text-center font-bold">Back</p>
+            {data.flippable && <p className="text-center font-bold">Back</p>}
 
             {imageBack && (
               <img

@@ -1,7 +1,11 @@
 import type { CollectionEntry } from "astro:content";
 
-export type TCard = CollectionEntry<"technologyCardsDeck">;
-export type TCardData = CollectionEntry<"technologyCardsDeck">["data"];
+export type TCard =
+  | CollectionEntry<"technologyCardsDeck">
+  | CollectionEntry<"magicCardsDeck">;
+export type TCardData =
+  | CollectionEntry<"technologyCardsDeck">["data"]
+  | CollectionEntry<"magicCardsDeck">["data"];
 export type TOutputCard = CollectionEntry<"technologyCardsOutput">;
 export type TOutputCardData = CollectionEntry<"technologyCardsOutput">["data"];
 

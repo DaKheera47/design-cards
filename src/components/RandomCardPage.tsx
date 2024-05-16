@@ -1,13 +1,14 @@
 import { Toaster } from "@/components/ui/toaster";
-import { $isSessionEnded, $isSessionStarted, $sessionData } from "@/stores/sessionStore";
+import {
+  $isSessionEnded,
+  $isSessionStarted,
+  $sessionData,
+} from "@/stores/sessionStore";
 import { useStore } from "@nanostores/react";
-import type { CollectionEntry } from "astro:content";
 import { useEffect } from "react";
+import type { TCard, TOutputCard } from "src/cards.d";
 import RandomCardManager from "./RandomCardManager";
 import SessionInputCard from "./SessionInputCard";
-
-type TCard = CollectionEntry<"technologyCardsDeck">;
-type TOutputCard = CollectionEntry<"technologyCardsOutput">;
 
 type Props = {
   cards: TCard[];
