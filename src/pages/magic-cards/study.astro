@@ -7,8 +7,14 @@ const deckCards = await getCollection("magicCardsDeck");
 const outputCards = await getCollection("magicCardsOutput");
 ---
 
-<Layout title="Magic Cards Randomiser">
-  <section class="py-8">
+<Layout title="Magic Cards Study">
+  <section class="max-h-screen py-8">
+    <div class="space-y-4">
+      <h1 class="text-center text-2xl">Magic Cards Study</h1>
+
+      <hr />
+    </div>
+
     <RandomCardPage
       client:load
       cards={deckCards}
