@@ -3,7 +3,7 @@
     "body": "",
     "num_words_front": 17,
     "num_words_back": 30,
-    "imageFront": "/src/assets/IOToys/Function_MobileApp-front.webp",
-    "imageBack": "/src/assets/IOToys/Function_MobileApp-back.webp",
+    "imageFront": "/src/assets/technology-cards/Function_MobileApp-front.webp",
+    "imageBack": "/src/assets/technology-cards/Function_MobileApp-back.webp",
     "flippable": true
 }

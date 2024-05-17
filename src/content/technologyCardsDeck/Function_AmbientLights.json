@@ -3,7 +3,7 @@
     "body": "",
     "num_words_front": 2,
     "num_words_back": 29,
-    "imageFront": "/src/assets/IOToys/Function_AmbientLights-front.webp",
-    "imageBack": "/src/assets/IOToys/Function_AmbientLights-back.webp",
+    "imageFront": "/src/assets/technology-cards/Function_AmbientLights-front.webp",
+    "imageBack": "/src/assets/technology-cards/Function_AmbientLights-back.webp",
     "flippable": true
 }

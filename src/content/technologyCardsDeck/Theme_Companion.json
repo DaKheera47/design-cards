@@ -3,7 +3,7 @@
     "body": "",
     "num_words_front": 1,
     "num_words_back": 24,
-    "imageFront": "/src/assets/IOToys/Theme_Companion-front.webp",
-    "imageBack": "/src/assets/IOToys/Theme_Companion-back.webp",
+    "imageFront": "/src/assets/technology-cards/Theme_Companion-front.webp",
+    "imageBack": "/src/assets/technology-cards/Theme_Companion-back.webp",
     "flippable": true
 }

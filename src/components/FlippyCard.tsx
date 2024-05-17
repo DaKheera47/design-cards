@@ -123,9 +123,7 @@ export default function FlippyCard({ data, isDialogOpen }: FlippyCardProps) {
         Currently showing{" "}
         {data.flippable && (
           <>
-            {data.flippable && (
-              <span className="font-bold">{!isFlipped ? "Front" : "Back"}</span>
-            )}
+            <span className="font-bold">{!isFlipped ? "Front" : "Back"}</span>{" "}
             of{" "}
           </>
         )}

@@ -3,7 +3,7 @@
     "body": "",
     "num_words_front": 1,
     "num_words_back": 29,
-    "imageFront": "/src/assets/IOToys/Function_bluetooth-front.webp",
-    "imageBack": "/src/assets/IOToys/Function_bluetooth-back.webp",
+    "imageFront": "/src/assets/technology-cards/Function_bluetooth-front.webp",
+    "imageBack": "/src/assets/technology-cards/Function_bluetooth-back.webp",
     "flippable": true
 }

@@ -3,7 +3,7 @@
     "body": "",
     "num_words_front": 1,
     "num_words_back": 25,
-    "imageFront": "/src/assets/IOToys/Function_Programable-front.webp",
-    "imageBack": "/src/assets/IOToys/Function_Programable-back.webp",
+    "imageFront": "/src/assets/technology-cards/Function_Programable-front.webp",
+    "imageBack": "/src/assets/technology-cards/Function_Programable-back.webp",
     "flippable": true
 }
