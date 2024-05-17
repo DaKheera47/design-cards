@@ -29,8 +29,6 @@ export default function FlippyCard({ data, isDialogOpen }: FlippyCardProps) {
     image = data.imageFront;
   } else {
     image = data.image;
-    console.log("image", image);
-    console.log("data", data);
   }
 
   // imageBack may or may not exist
