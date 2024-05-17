@@ -51,9 +51,36 @@ const magicCardsOutput = defineCollection({
     }),
 });
 
+const functionCardsDeck = defineCollection({
+  type: "data",
+  schema: ({ image }) =>
+    z.object({
+      title: z.string().optional(),
+      body: z.string().optional(),
+      image: image(),
+      words: z.string().optional(),
+      flippable: z.boolean().optional(),
+      word_count: z.number().optional(),
+    }),
+});
+
+const functionCardsOutput = defineCollection({
+  type: "data",
+  schema: ({ image }) =>
+    z.object({
+      title: z.string().optional(),
+      body: z.string().optional(),
+      image: image(),
+      flippable: z.boolean().optional(),
+      order: z.number().min(1),
+    }),
+});
+
 export const collections = {
   technologyCardsDeck,
   technologyCardsOutput,
   magicCardsDeck,
   magicCardsOutput,
+  functionCardsDeck,
+  functionCardsOutput,
 };

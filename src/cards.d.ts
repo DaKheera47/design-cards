@@ -2,15 +2,19 @@ import type { CollectionEntry } from "astro:content";
 
 export type TCard =
   | CollectionEntry<"technologyCardsDeck">
+  | CollectionEntry<"functionCardsDeck">
   | CollectionEntry<"magicCardsDeck">;
 export type TCardData =
   | CollectionEntry<"technologyCardsDeck">["data"]
+  | CollectionEntry<"functionCardsDeck">["data"]
   | CollectionEntry<"magicCardsDeck">["data"];
 export type TOutputCard =
   | CollectionEntry<"technologyCardsOutput">
+  | CollectionEntry<"functionCardsOutput">
   | CollectionEntry<"magicCardsOutput">;
 export type TOutputCardData =
   | CollectionEntry<"technologyCardsOutput">["data"]
+  | CollectionEntry<"functionCardsOutput">["data"]
   | CollectionEntry<"magicCardsOutput">["data"];
 
 // Type guards

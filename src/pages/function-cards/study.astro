@@ -1,22 +1,18 @@
 ---
 import Layout from "../../layouts/Layout.astro";
-import IndexItem from "src/components/IndexItem.astro";
+
+import { getCollection } from "astro:content";
+import RandomCardPage from "src/components/RandomCardPage";
+const deckCards = await getCollection("functionCardsDeck");
+const outputCards = await getCollection("functionCardsOutput");
 ---
 
-<Layout title="Function Cards Section">
-  <section
-    class="flex h-full flex-1 flex-wrap items-center justify-center space-y-6 py-8 text-center"
-  >
-    <div class="w-full space-y-4">
-      <div class="space-y-2">
-        <h1 class="text-3xl font-bold">Function Cards Section</h1>
-        <p class="capitalize">Under construction</p>
-      </div>
-
-      <IndexItem
-        href="/"
-        title="Go Back Home"
-      />
-    </div>
+<Layout title="Function Cards Randomiser">
+  <section class="py-8">
+    <RandomCardPage
+      client:load
+      cards={deckCards}
+      outputCards={outputCards}
+    />
   </section>
 </Layout>
