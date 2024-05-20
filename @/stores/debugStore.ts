@@ -1,3 +1,4 @@
 import { atom } from "nanostores";
 
-export const $enableDebug = atom(true);
+// false by default
+export const $enableDebug = atom(false);
