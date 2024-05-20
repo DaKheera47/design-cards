@@ -10,12 +10,6 @@ import {
 import { useStore } from "@nanostores/react";
 import type { ImageMetadata } from "astro";
 import { useEffect, useRef, useState } from "react";
-import {
-  isTCard,
-  isTOutputCard,
-  type TCard,
-  type TOutputCard,
-} from "src/cards.d";
 
 type FlippyCardProps = any;
 
@@ -116,17 +110,19 @@ export default function FlippyCard({ data, isDialogOpen }: FlippyCardProps) {
   };
 
   return (
-    <div className="mx-auto max-w-2xl pb-16 text-center">
-      <p>
-        Currently showing{" "}
-        {data.flippable && (
-          <>
-            <span className="font-bold">{!isFlipped ? "Front" : "Back"}</span>{" "}
-            of{" "}
-          </>
-        )}
-        <span className="font-bold">{title}</span>
-      </p>
+    <div className="mx-auto max-w-2xl pb-16 pt-4 text-center">
+      {enableDebug && (
+        <p>
+          Currently showing{" "}
+          {data.flippable && (
+            <>
+              <span className="font-bold">{!isFlipped ? "Front" : "Back"}</span>{" "}
+              of{" "}
+            </>
+          )}
+          <span className="font-bold">{title}</span>
+        </p>
+      )}
 
       <div
         className={cn("flip-container mx-auto my-4", {
@@ -134,14 +130,16 @@ export default function FlippyCard({ data, isDialogOpen }: FlippyCardProps) {
         })}
       >
         <div className="flipper">
-          <div className="front rounded-lg border shadow-md">
-            {data.flippable && <p className="text-center font-bold">Front</p>}
+          <div className="front flex flex-wrap items-center justify-center rounded-lg border shadow-md">
+            {data.flippable && (
+              <p className="w-full text-center font-bold">Front</p>
+            )}
 
             {image && (
               <img
                 src={image.src}
                 alt={title || ""}
-                className="h-[95%] w-full object-contain"
+                className="my-auto h-[90%] w-full object-contain"
               />
             )}
           </div>

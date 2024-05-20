@@ -1,6 +1,7 @@
 import { Input } from "@/components/ui/input";
 import { Switch } from "@/components/ui/switch";
 import { toast } from "@/components/ui/use-toast";
+import { truncateString } from "@/lib/utils";
 import { $enableDebug } from "@/stores/debugStore";
 import {
   $chosenDevice,
@@ -145,59 +146,62 @@ const RandomCardManager = ({ cards, outputCards }: Props) => {
 
   return (
     <>
-      <div className="flex space-x-4">
-        <h1>Enable Debug Mode</h1>
-        <Switch
-          checked={enableDebug}
-          onCheckedChange={() => {
-            $enableDebug.set(!enableDebug);
-          }}
-        />
-      </div>
-
       {enableDebug && (
-        <div className="my-8 space-y-4 border p-4">
-          <div className="flex items-center space-x-4">
-            <label htmlFor="cardFlipTimer">Card Flip Timer (ms)</label>
-            <Input
-              id="cardFlipTimer"
-              type="number"
-              className="w-24"
-              value={cardFlipTimer}
-              onChange={handleCardFlipTimerChange}
+        <>
+          <div className="mt-4 flex space-x-4">
+            <h1>Enable Debug Mode</h1>
+            <Switch
+              checked={enableDebug}
+              onCheckedChange={() => {
+                $enableDebug.set(!enableDebug);
+              }}
             />
           </div>
 
-          <div className="mt-4">
-            <p>Time spent on front: {timeSpentFront}ms</p>
-            <p>Time spent on back: {timeSpentBack}ms</p>
+          <div className="my-4 space-y-4 rounded border p-4">
+            <div className="flex items-center space-x-4">
+              <label htmlFor="cardFlipTimer">Card Flip Timer (ms)</label>
+              <Input
+                id="cardFlipTimer"
+                type="number"
+                className="w-24"
+                value={cardFlipTimer}
+                onChange={handleCardFlipTimerChange}
+              />
+            </div>
+            <div className="mt-4">
+              <p>Time spent on front: {timeSpentFront}ms</p>
+              <p>Time spent on back: {timeSpentBack}ms</p>
+            </div>
+            {activeCardIdx !== null && (
+              <>
+                {randomisedCards[activeCardIdx] && (
+                  <h2>
+                    Current Card -{" "}
+                    {truncateString(
+                      randomisedCards[activeCardIdx].data.title,
+                      25,
+                    )}
+                  </h2>
+                )}
+                <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+                  {randomisedCards.map((card, index) => (
+                    <li
+                      key={card.id}
+                      style={{
+                        fontWeight: index === activeCardIdx ? "bold" : "normal",
+                      }}
+                      className="cursor-pointer hover:underline w-96"
+                      onClick={() => setActiveCardIdx(index)}
+                    >
+                      {truncateString(card.data.title, 25)}
+                    </li>
+                  ))}
+                </ul>
+              </>
+            )}
           </div>
-
-          {activeCardIdx !== null && (
-            <>
-              {randomisedCards[activeCardIdx] && (
-                <h2>
-                  Current Card - {randomisedCards[activeCardIdx]?.data?.title}
-                </h2>
-              )}
-
-              <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-                {randomisedCards.map((card, index) => (
-                  <li
-                    key={card.id}
-                    style={{
-                      fontWeight: index === activeCardIdx ? "bold" : "normal",
-                    }}
-                    className="cursor-pointer hover:underline"
-                    onClick={() => setActiveCardIdx(index)}
-                  >
-                    {card.data.title}
-                  </li>
-                ))}
-              </ul>
-            </>
-          )}
-        </div>
+        </>
       )}
 
       <FlippyCard

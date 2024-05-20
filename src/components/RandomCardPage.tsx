@@ -1,4 +1,5 @@
 import { Toaster } from "@/components/ui/toaster";
+import { $enableDebug } from "@/stores/debugStore";
 import {
   $isSessionEnded,
   $isSessionStarted,
@@ -6,6 +7,7 @@ import {
 } from "@/stores/sessionStore";
 import { useStore } from "@nanostores/react";
 import { useEffect } from "react";
+import { useHotkeys } from "react-hotkeys-hook";
 import type { TCard, TOutputCard } from "src/cards.d";
 import RandomCardManager from "./RandomCardManager";
 import SessionInputCard from "./SessionInputCard";
@@ -21,6 +23,12 @@ const RandomCardPage = ({ cards, outputCards }: Props) => {
   const isSessionEnded = useStore($isSessionEnded);
   const sessionData = useStore($sessionData);
   console.table(sessionData);
+  const debug = useStore($enableDebug);
+
+  // toggle the debug mode
+  useHotkeys("ctrl+shift+a", () => {
+    $enableDebug.set(!debug);
+  });
 
   // when session ends, commit the session data to the database
   useEffect(() => {
@@ -44,7 +52,7 @@ const RandomCardPage = ({ cards, outputCards }: Props) => {
   return (
     <>
       <div className="flex h-[90vh] flex-wrap items-center justify-center">
-        <div className="space-y-8">
+        <div className="space-y-4">
           {!isSessionEnded && isSessionStarted ? (
             <RandomCardManager cards={cards} outputCards={outputCards} />
           ) : (
