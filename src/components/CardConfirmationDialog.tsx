@@ -60,7 +60,7 @@ export default function CardConfirmationDialog({
         <div className="fixed inset-0 bg-black/30" aria-hidden="true" />
 
         <div className="fixed inset-0 flex w-screen items-center justify-center p-4">
-          <DialogPanel className="max-w-lg space-y-4 rounded-md border bg-white p-12">
+          <DialogPanel className="max-w-lg space-y-4 bg-card rounded-md border p-12">
             {title && (
               <DialogTitle className="font-bold capitalize">
                 {title}
