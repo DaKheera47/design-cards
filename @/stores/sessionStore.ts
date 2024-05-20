@@ -32,6 +32,7 @@ export interface ISessionData {
   cardIdx: number;
   time_spent_front: number;
   time_spent_back: number;
+  page_url: string;
 }
 
 export const $sessionData = atom<ISessionData[]>([]);

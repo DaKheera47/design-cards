@@ -32,6 +32,7 @@ export default async function () {
       starting_timestamp: new Date(),
       time_spent_back: 1000,
       time_spent_front: 1000,
+      page_url: "https://design-cards.vercel.app/magic-cards/study",
     },
     {
       id: 2,
@@ -45,6 +46,7 @@ export default async function () {
       starting_timestamp: new Date(),
       time_spent_back: 1000,
       time_spent_front: 1000,
+      page_url: "https://design-cards.vercel.app/technology-cards/study",
     },
   ]);
 }

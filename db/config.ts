@@ -24,6 +24,7 @@ const SessionEvent = defineTable({
     card_idx: column.number(),
     time_spent_front: column.number(),
     time_spent_back: column.number(),
+    page_url: column.text(),
   },
 });
 

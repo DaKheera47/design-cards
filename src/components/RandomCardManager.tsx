@@ -107,6 +107,7 @@ const RandomCardManager = ({ cards, outputCards }: Props) => {
           cardIdx: activeCardIdx,
           time_spent_front: timeSpentFront,
           time_spent_back: timeSpentBack,
+          page_url: window.location.href,
         },
       ]);
 
