@@ -110,7 +110,7 @@ export default function FlippyCard({ data, isDialogOpen }: FlippyCardProps) {
   };
 
   return (
-    <div className="mx-auto max-w-2xl pb-16 pt-4 text-center">
+    <div className="mx-auto max-w-2xl text-center">
       {enableDebug && (
         <p>
           Currently showing{" "}
