@@ -114,7 +114,7 @@ export default function FlippableTorchCard({
   };
 
   return (
-    <div className="mx-auto flex max-w-2xl items-center text-center">
+    <div className="mx-auto flex max-w-2xl items-center justify-center text-center">
       {enableDebug && (
         <p>
           Currently showing{" "}

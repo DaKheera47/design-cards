@@ -21,6 +21,7 @@ import { useHotkeys } from "react-hotkeys-hook";
 import type { TCard, TOutputCard } from "src/cards";
 import CardConfirmationDialog from "./CardConfirmationDialog";
 import FlippableTorchCard from "./FlippableTorchCard";
+import FlippyCard from "./FlippyCard";
 
 type Props = {
   cards: TCard[];
@@ -209,17 +210,19 @@ const RandomCardManager = ({ cards, outputCards }: Props) => {
         </>
       )}
 
-      {/* <FlippyCard
-        key={randomisedCards[activeCardIdx].id}
-        {...randomisedCards[activeCardIdx]}
-        isDialogOpen={isDialogOpen}
-      /> */}
-
-      <FlippableTorchCard
-        key={randomisedCards[activeCardIdx].id}
-        {...randomisedCards[activeCardIdx]}
-        isDialogOpen={isDialogOpen}
-      />
+      {isEyeTracked ? (
+        <FlippyCard
+          key={randomisedCards[activeCardIdx].id}
+          {...randomisedCards[activeCardIdx]}
+          isDialogOpen={isDialogOpen}
+        />
+      ) : (
+        <FlippableTorchCard
+          key={randomisedCards[activeCardIdx].id}
+          {...randomisedCards[activeCardIdx]}
+          isDialogOpen={isDialogOpen}
+        />
+      )}
 
       {/* <TorchCard
         image={randomisedCards[activeCardIdx]?.data?.imageFront}

@@ -110,7 +110,7 @@ export default function FlippyCard({ data, isDialogOpen }: FlippyCardProps) {
   };
 
   return (
-    <div className="mx-auto max-w-2xl text-center">
+    <div className="mx-auto flex max-w-2xl items-center justify-center text-center">
       {enableDebug && (
         <p>
           Currently showing{" "}
@@ -125,12 +125,12 @@ export default function FlippyCard({ data, isDialogOpen }: FlippyCardProps) {
       )}
 
       <div
-        className={cn("flip-container mx-auto my-4", {
+        className={cn("flip-container", {
           flip: isFlipped,
         })}
       >
         <div className="flipper">
-          <div className="front flex flex-wrap items-center justify-center rounded-lg border shadow-md">
+          <div className="front">
             {data.flippable && (
               <p className="w-full text-center font-bold">Front</p>
             )}
@@ -144,7 +144,7 @@ export default function FlippyCard({ data, isDialogOpen }: FlippyCardProps) {
             )}
           </div>
 
-          <div className="back rounded-lg border shadow-md">
+          <div className="back">
             {data.flippable && <p className="text-center font-bold">Back</p>}
 
             {imageBack && (
@@ -158,19 +158,19 @@ export default function FlippyCard({ data, isDialogOpen }: FlippyCardProps) {
         </div>
       </div>
 
-      <div className="flex w-full justify-center space-x-4">
-        {enableDebug && (
-          <a className={buttonVariants({ variant: "secondary" })} href="/">
-            Back to home
-          </a>
-        )}
+      {data.flippable && (
+        <div className="flex w-full justify-center space-x-4">
+          {enableDebug && (
+            <a className={buttonVariants({ variant: "secondary" })} href="/">
+              Back to home
+            </a>
+          )}
 
-        {data.flippable && (
           <Button onClick={handleClick}>
             {isFlipped ? "Show Front" : "Show Back"}
           </Button>
-        )}
-      </div>
+        </div>
+      )}
     </div>
   );
 }
