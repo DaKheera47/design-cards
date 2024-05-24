@@ -22,7 +22,7 @@ const TorchCard = ({ image, side }: Props) => {
   const enableDebug = useStore($enableDebug);
 
   // how often to store the mouse pos
-  const MOUSE_POS_COUNTER = 10;
+  const MOUSE_POS_POLLING_RATE = 10;
 
   useEffect(() => {
     const storeMousePos = () => {
@@ -39,7 +39,7 @@ const TorchCard = ({ image, side }: Props) => {
       $mousePos.set([...$mousePos.get(), { x, y, timestamp, side }]);
     };
 
-    const intervalId = setInterval(storeMousePos, MOUSE_POS_COUNTER);
+    const intervalId = setInterval(storeMousePos, MOUSE_POS_POLLING_RATE);
 
     return () => clearInterval(intervalId);
   }, [mouseX, mouseY, side]);
