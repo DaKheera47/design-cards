@@ -25,6 +25,7 @@ const SessionEvent = defineTable({
     time_spent_front: column.number(),
     time_spent_back: column.number(),
     page_url: column.text(),
+    mouse_pos: column.json(),
   },
 });
 

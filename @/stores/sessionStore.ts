@@ -11,6 +11,15 @@ export const $isSessionStarted = atom(false);
 
 export const $isSessionEnded = atom(false);
 
+export interface IMousePos {
+  x: number;
+  y: number;
+  timestamp: string;
+  side: "front" | "back";
+}
+
+export const $mousePos = atom<IMousePos[]>([]);
+
 // this means that the length of the array will be the number of flips
 export interface IFlips {
   timestamp: string;
@@ -33,6 +42,7 @@ export interface ISessionData {
   time_spent_front: number;
   time_spent_back: number;
   page_url: string;
+  mouse_pos: IMousePos[];
 }
 
 export const $sessionData = atom<ISessionData[]>([]);

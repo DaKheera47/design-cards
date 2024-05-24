@@ -10,6 +10,7 @@ import {
   $isEyeTracked,
   $isSessionEnded,
   $isSessionStarted,
+  $mousePos,
   $sessionData,
   $start_timestamp,
   $timeSpentBack,
@@ -47,6 +48,7 @@ const RandomCardManager = ({ cards, outputCards }: Props) => {
   const enableDebug = useStore($enableDebug);
   const timeSpentFront = useStore($timeSpentFront);
   const timeSpentBack = useStore($timeSpentBack);
+  const mousePos = useStore($mousePos);
 
   // toggle the debug mode
   useHotkeys("ctrl+shift+a", () => {
@@ -92,11 +94,11 @@ const RandomCardManager = ({ cards, outputCards }: Props) => {
       const sessionNumber = chosenSession?.match(/\d+/g);
       const deviceNumber = chosenDevice?.match(/\d+/g);
 
-      let tempStart: any = "";
+      let tempStart = "";
       if (sessionData.length === 0) {
         console.log("Session Data is empty");
         console.log(sessionData);
-        tempStart = start_timestamp;
+        tempStart = start_timestamp ?? "";
       } else {
         tempStart = sessionData[sessionData.length - 1].submission_timestamp;
       }
@@ -116,8 +118,11 @@ const RandomCardManager = ({ cards, outputCards }: Props) => {
           time_spent_front: timeSpentFront,
           time_spent_back: timeSpentBack,
           page_url: window.location.href,
+          mouse_pos: mousePos,
         },
       ]);
+
+      $mousePos.set([]);
 
       if (nextIdx < randomisedCards.length) {
         return nextIdx;
@@ -129,14 +134,16 @@ const RandomCardManager = ({ cards, outputCards }: Props) => {
 
       toast({
         title: "Session Ended.",
-        description: `Thanks for participating. ${
-          isEyeTracked &&
-          `Eye tracking filename: ${sessionNumber}.${deviceNumber}`
+        description: `Thanks for participating.${
+          isEyeTracked
+            ? ` Eye tracking filename: ${sessionNumber}.${deviceNumber}`
+            : ""
         }`,
       });
 
       // reset the session
       $isSessionStarted.set(false);
+      $sessionData.set([]);
 
       return -1;
     });

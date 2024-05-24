@@ -33,6 +33,14 @@ export default async function () {
       time_spent_back: 1000,
       time_spent_front: 1000,
       page_url: "https://design-cards.vercel.app/magic-cards/study",
+      mouse_pos: [
+        {
+          x: 100,
+          y: 100,
+          timestamp: new Date(),
+          side: "front",
+        },
+      ],
     },
     {
       id: 2,
@@ -47,6 +55,14 @@ export default async function () {
       time_spent_back: 1000,
       time_spent_front: 1000,
       page_url: "https://design-cards.vercel.app/technology-cards/study",
+      mouse_pos: [
+        {
+          x: 100,
+          y: 100,
+          timestamp: new Date(),
+          side: "back",
+        },
+      ],
     },
   ]);
 }

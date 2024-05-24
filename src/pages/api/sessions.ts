@@ -138,6 +138,7 @@ export const POST: APIRoute = async ({ request }) => {
         time_spent_back: event.time_spent_back,
         time_spent_front: event.time_spent_front,
         page_url: event.page_url,
+        mouse_pos: event.mouse_pos,
       }),
     );
   });
