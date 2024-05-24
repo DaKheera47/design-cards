@@ -20,6 +20,7 @@ import { useEffect, useState } from "react";
 import type { TCard, TOutputCard } from "src/cards";
 import CardConfirmationDialog from "./CardConfirmationDialog";
 import FlippyCard from "./FlippyCard";
+import TorchCard from "src/components/TorchCard";
 
 type Props = {
   cards: TCard[];
@@ -191,7 +192,7 @@ const RandomCardManager = ({ cards, outputCards }: Props) => {
                       style={{
                         fontWeight: index === activeCardIdx ? "bold" : "normal",
                       }}
-                      className="cursor-pointer hover:underline w-96"
+                      className="w-96 cursor-pointer hover:underline"
                       onClick={() => setActiveCardIdx(index)}
                     >
                       {truncateString(card.data.title, 25)}
@@ -204,10 +205,14 @@ const RandomCardManager = ({ cards, outputCards }: Props) => {
         </>
       )}
 
-      <FlippyCard
+      {/* <FlippyCard
         key={randomisedCards[activeCardIdx].id}
         {...randomisedCards[activeCardIdx]}
         isDialogOpen={isDialogOpen}
+      /> */}
+
+      <TorchCard
+        image={randomisedCards[activeCardIdx]?.data?.imageFront}
       />
 
       <CardConfirmationDialog
