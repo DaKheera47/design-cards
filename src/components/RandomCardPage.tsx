@@ -47,7 +47,9 @@ const RandomCardPage = ({ cards, outputCards }: Props) => {
         {!isSessionEnded && isSessionStarted ? (
           <RandomCardManager cards={cards} outputCards={outputCards} />
         ) : (
-          <SessionInputCard />
+          <div className="flex h-[80vh] w-full items-center justify-center">
+            <SessionInputCard />
+          </div>
         )}
 
         {/* if session ended */}
