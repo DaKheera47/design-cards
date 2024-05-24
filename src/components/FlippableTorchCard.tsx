@@ -141,7 +141,7 @@ export default function FlippableTorchCard({
                   <p className="w-full text-center font-bold">Front</p>
                 )}
 
-                <TorchCard image={image} />
+                <TorchCard image={image} side={!isFlipped ? "front" : "back"} />
               </div>
             )}
           </div>
@@ -153,7 +153,10 @@ export default function FlippableTorchCard({
                   <p className="w-full text-center font-bold">Back</p>
                 )}
 
-                <TorchCard image={imageBack} />
+                <TorchCard
+                  image={imageBack}
+                  side={!isFlipped ? "front" : "back"}
+                />
               </div>
             )}
           </div>

@@ -1,21 +1,48 @@
 import { $enableDebug } from "@/stores/debugStore";
+import { $mousePos } from "@/stores/sessionStore";
 import { useStore } from "@nanostores/react";
 import type { ImageMetadata } from "astro";
 import React, { useEffect } from "react";
 
 type Props = {
   image: ImageMetadata;
+  side: "front" | "back";
 };
 
-const TorchCard = ({ image }: Props) => {
+const TorchCard = ({ image, side }: Props) => {
   const torchImageRef = React.useRef<HTMLDivElement>(null);
 
-  // where the mouse is
-  const [mouseX, setMouseX] = React.useState(50);
-  const [mouseY, setMouseY] = React.useState(50);
-  const [gradientSize, setGradientSize] = React.useState(300);
-  const [scaleFactor, setScaleFactor] = React.useState(2);
+  // where the mouse is, large negative number to start with so it starts off screen
+  const [mouseX, setMouseX] = React.useState(-1000);
+  const [mouseY, setMouseY] = React.useState(-1000);
+  // what the size of the gradient is
+  const [gradientSize, setGradientSize] = React.useState(150);
+  // what the shape of the gradient is
+  const [scaleFactor, setScaleFactor] = React.useState(1);
   const enableDebug = useStore($enableDebug);
+
+  // how often to store the mouse pos
+  const MOUSE_POS_COUNTER = 10;
+
+  useEffect(() => {
+    const storeMousePos = () => {
+      const timestamp = new Date().toISOString();
+      const x = mouseX;
+      const y = mouseY;
+
+      // if the x or y is in it's initial value, don't store it
+      if (x === -1000 || y === -1000) return;
+
+      // if a value with the same x and y already exists, don't add it
+      if ($mousePos.get().find((pos) => pos.x === x && pos.y === y)) return;
+
+      $mousePos.set([...$mousePos.get(), { x, y, timestamp, side }]);
+    };
+
+    const intervalId = setInterval(storeMousePos, MOUSE_POS_COUNTER);
+
+    return () => clearInterval(intervalId);
+  }, [mouseX, mouseY, side]);
 
   useEffect(() => {
     // get mouse pos from document
@@ -27,11 +54,18 @@ const TorchCard = ({ image }: Props) => {
       const mouseX = event.clientX - left;
       const mouseY = event.clientY - top;
 
+      // TODO: add a check to see if the mouse is outside the card,
+      // TODO: if so, set the mouse pos to -1000
+
       setMouseX(mouseX);
       setMouseY(mouseY);
     };
 
     torchImageRef.current?.addEventListener("mousemove", handleMouse);
+
+    return () => {
+      torchImageRef.current?.removeEventListener("mousemove", handleMouse);
+    };
   }, []);
 
   useEffect(() => {
