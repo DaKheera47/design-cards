@@ -73,7 +73,7 @@ const TorchCard = ({ image }: Props) => {
   return (
     <div
       ref={torchImageRef}
-      className="relative mx-auto min-h-[60vh] overflow-hidden border border-white"
+      className="relative mx-auto min-h-[60vh] overflow-hidden"
     >
       <img
         className="pointer-events-none inset-0 min-h-[60vh] w-full select-none object-cover"
