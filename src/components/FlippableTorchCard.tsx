@@ -114,16 +114,16 @@ export default function FlippableTorchCard({
   };
 
   return (
-    <div className="mx-auto flex max-w-2xl items-center justify-center text-center">
+    <div className="mx-auto flex max-w-2xl items-center justify-center space-x-6 text-center">
       {enableDebug && (
-        <p>
-          Currently showing{" "}
+        <p className="text-right">
           {data.flippable && (
             <>
               <span className="font-bold">{!isFlipped ? "Front" : "Back"}</span>{" "}
               of{" "}
             </>
           )}
+
           <span className="font-bold">{title}</span>
         </p>
       )}
@@ -134,27 +134,45 @@ export default function FlippableTorchCard({
         })}
       >
         <div className="flipper">
-          <div className="front">{image && <TorchCard image={image} />}</div>
+          <div className="front">
+            {image && (
+              <div>
+                {data.flippable && (
+                  <p className="w-full text-center font-bold">Front</p>
+                )}
+
+                <TorchCard image={image} />
+              </div>
+            )}
+          </div>
 
           <div className="back">
-            {imageBack && <TorchCard image={imageBack} />}
+            {imageBack && (
+              <div>
+                {data.flippable && (
+                  <p className="w-full text-center font-bold">Back</p>
+                )}
+
+                <TorchCard image={imageBack} />
+              </div>
+            )}
           </div>
         </div>
       </div>
 
-      <div className="flex w-full justify-center space-x-4">
-        {enableDebug && (
-          <a className={buttonVariants({ variant: "secondary" })} href="/">
-            Back to home
-          </a>
-        )}
+      {data.flippable && (
+        <div className="flex w-full justify-center space-x-4">
+          {enableDebug && (
+            <a className={buttonVariants({ variant: "secondary" })} href="/">
+              Back to home
+            </a>
+          )}
 
-        {data.flippable && (
           <Button onClick={handleClick}>
             {isFlipped ? "Show Front" : "Show Back"}
           </Button>
-        )}
-      </div>
+        </div>
+      )}
     </div>
   );
 }
