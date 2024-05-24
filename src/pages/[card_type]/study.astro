@@ -1,0 +1,76 @@
+---
+import { getCollection } from "astro:content";
+import RandomCardPage from "src/components/RandomCardPage";
+import Layout from "../../layouts/Layout.astro";
+
+export const prerender = true;
+
+// Generate the static paths
+export async function getStaticPaths() {
+  // Function to fetch data
+  async function fetchData() {
+    return [
+      {
+        slug: "function-cards",
+        props: {
+          deck: await getCollection("functionCardsDeck"),
+          output: await getCollection("functionCardsOutput"),
+        },
+      },
+      {
+        slug: "magic-cards",
+        props: {
+          deck: await getCollection("magicCardsDeck"),
+          output: await getCollection("magicCardsOutput"),
+        },
+      },
+      {
+        slug: "technology-cards",
+        props: {
+          deck: await getCollection("technologyCardsDeck"),
+          output: await getCollection("technologyCardsOutput"),
+        },
+      },
+    ];
+  }
+
+  // Fetch the data
+  const card_types = await fetchData();
+
+  return card_types.map((card_type) => {
+    return {
+      params: { card_type: card_type.slug },
+      props: { card_type: card_type.slug, data: card_type.props },
+    };
+  });
+}
+
+// Extract params and props
+const { card_type, data } = Astro.props;
+const { deck, output } = data;
+
+// Format the card type string
+const formattedCardType = card_type
+  .split("-")
+  .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+  .join(" ");
+---
+
+<Layout
+  title={`${formattedCardType} Study`}
+  dark
+>
+  <section class="max-h-screen py-8">
+    <div class="space-y-4">
+      <h1 class="text-center text-2xl">{`${formattedCardType} Study`}</h1>
+
+      <hr />
+    </div>
+
+    <RandomCardPage
+      client:load
+      cards={deck}
+      outputCards={output}
+    />
+  </section>
+</Layout>
