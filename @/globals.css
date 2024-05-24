@@ -68,7 +68,7 @@
 
 @layer base {
   * {
-    /* @apply border-border !border !border-red-600; */
+    /* @apply !outline !outline-red-600; */
     @apply border-border;
   }
   body {
@@ -86,10 +86,11 @@
   transform: rotateY(180deg);
 }
 
-.flip-container,
 .front,
+.flip-container,
 .back {
-  @apply h-[60vh] w-[80vw] max-w-[580px] md:h-[80vh];
+  @apply min-h-[60vh] min-w-[70%];
+  /* @apply h-[60vh] w-[80vw] max-w-[580px] md:h-[60vh]; */
 }
 
 /* flip speed goes here */

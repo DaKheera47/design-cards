@@ -17,10 +17,10 @@ import {
 } from "@/stores/sessionStore";
 import { useStore } from "@nanostores/react";
 import { useEffect, useState } from "react";
+import { useHotkeys } from "react-hotkeys-hook";
 import type { TCard, TOutputCard } from "src/cards";
 import CardConfirmationDialog from "./CardConfirmationDialog";
-import FlippyCard from "./FlippyCard";
-import TorchCard from "src/components/TorchCard";
+import FlippableTorchCard from "./FlippableTorchCard";
 
 type Props = {
   cards: TCard[];
@@ -46,6 +46,11 @@ const RandomCardManager = ({ cards, outputCards }: Props) => {
   const enableDebug = useStore($enableDebug);
   const timeSpentFront = useStore($timeSpentFront);
   const timeSpentBack = useStore($timeSpentBack);
+
+  // toggle the debug mode
+  useHotkeys("ctrl+shift+a", () => {
+    $enableDebug.set(!enableDebug);
+  });
 
   // randomise the cards on mount
   useEffect(() => {
@@ -138,12 +143,11 @@ const RandomCardManager = ({ cards, outputCards }: Props) => {
 
   if (
     (randomisedCards.length !== 0 && activeCardIdx === null) ||
-    activeCardIdx >= randomisedCards.length
+    activeCardIdx >= randomisedCards.length ||
+    isSessionEnded
   ) {
     return null;
   }
-
-  if (isSessionEnded) return null;
 
   return (
     <>
@@ -211,9 +215,15 @@ const RandomCardManager = ({ cards, outputCards }: Props) => {
         isDialogOpen={isDialogOpen}
       /> */}
 
-      <TorchCard
-        image={randomisedCards[activeCardIdx]?.data?.imageFront}
+      <FlippableTorchCard
+        key={randomisedCards[activeCardIdx].id}
+        {...randomisedCards[activeCardIdx]}
+        isDialogOpen={isDialogOpen}
       />
+
+      {/* <TorchCard
+        image={randomisedCards[activeCardIdx]?.data?.imageFront}
+      /> */}
 
       <CardConfirmationDialog
         isOpen={isDialogOpen}

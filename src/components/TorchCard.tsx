@@ -1,9 +1,7 @@
 import { $enableDebug } from "@/stores/debugStore";
 import { useStore } from "@nanostores/react";
 import type { ImageMetadata } from "astro";
-import { motion, useSpring } from "framer-motion";
 import React, { useEffect } from "react";
-import { useWindowSize } from "usehooks-ts";
 
 type Props = {
   image: ImageMetadata;
@@ -39,23 +37,29 @@ const TorchCard = ({ image }: Props) => {
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
       // don't do anything if not admin
-      if (!enableDebug) {
-        console.log("Returining becuase not debugged");
-        return;
-      }
-
-      // prevent the page from being scrolled
-      event.preventDefault();
+      if (!enableDebug) return;
 
       // up down controls the size of the gradient
       // left right controls the scale factor, which affects the shape of the gradient
       if (event.key === "ArrowUp") {
+        // prevent the page from being scrolled
+        event.preventDefault();
+
         setGradientSize((size) => size + 10);
       } else if (event.key === "ArrowDown") {
+        // prevent the page from being scrolled
+        event.preventDefault();
+
         setGradientSize((size) => size - 10);
       } else if (event.key === "ArrowRight") {
+        // prevent the page from being scrolled
+        event.preventDefault();
+
         setScaleFactor((factor) => factor + 0.1);
       } else if (event.key === "ArrowLeft") {
+        // prevent the page from being scrolled
+        event.preventDefault();
+
         setScaleFactor((factor) => factor - 0.1);
       }
     };
@@ -69,12 +73,12 @@ const TorchCard = ({ image }: Props) => {
   return (
     <div
       ref={torchImageRef}
-      className="relative mx-auto my-6 max-w-2xl overflow-hidden border border-white"
+      className="relative mx-auto min-h-[60vh] overflow-hidden border border-white"
     >
       <img
-        className="pointer-events-none inset-0 h-4/5 w-full select-none object-cover"
+        className="pointer-events-none inset-0 min-h-[60vh] w-full select-none object-cover"
         src={image.src}
-        alt="Placeholder"
+        alt={image.src}
       />
 
       {/* Outline for the mask */}
@@ -91,7 +95,7 @@ const TorchCard = ({ image }: Props) => {
       />
 
       {/* Top layer: the mask that covers the image */}
-      <motion.div
+      <div
         className="pointer-events-none absolute inset-0 h-full w-full bg-gradient-to-r text-white"
         style={{
           WebkitMaskImage: `radial-gradient(${gradientSize}px ${gradientSize / scaleFactor}px at ${mouseX}px ${mouseY}px, transparent 0%, transparent 50%, black 50%, black 100%)`,
