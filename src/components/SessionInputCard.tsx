@@ -110,7 +110,7 @@ export default function SessionInputCard() {
           </div>
 
           <div className="flex justify-between space-x-4">
-            <span>Eye Tracking Enabled</span>
+            <span>ET Enabled</span>
             <Switch
               checked={isEyeTracked}
               onCheckedChange={(checked) => {
