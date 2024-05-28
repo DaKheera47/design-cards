@@ -23,6 +23,7 @@ const TorchCard = ({ image, side }: Props) => {
 
   // how often to store the mouse pos
   const MOUSE_POS_POLLING_RATE = 10;
+  const MOUSE_OUT_OF_BOUNDS_POS = -1000;
 
   useEffect(() => {
     const storeMousePos = () => {
@@ -30,8 +31,9 @@ const TorchCard = ({ image, side }: Props) => {
       const x = mouseX;
       const y = mouseY;
 
-      // if the x or y is in it's initial value, don't store it
-      if (x === -1000 || y === -1000) return;
+      // if the x or y is in its initial value, don't store it
+      if (x === MOUSE_OUT_OF_BOUNDS_POS || y === MOUSE_OUT_OF_BOUNDS_POS)
+        return;
 
       // if a value with the same x and y already exists, don't add it
       if ($mousePos.get().find((pos) => pos.x === x && pos.y === y)) return;
@@ -54,17 +56,24 @@ const TorchCard = ({ image, side }: Props) => {
       const mouseX = event.clientX - left;
       const mouseY = event.clientY - top;
 
-      // TODO: add a check to see if the mouse is outside the card,
-      // TODO: if so, set the mouse pos to -1000
-
       setMouseX(mouseX);
       setMouseY(mouseY);
     };
 
+    const handleMouseLeave = () => {
+      setMouseX(MOUSE_OUT_OF_BOUNDS_POS);
+      setMouseY(MOUSE_OUT_OF_BOUNDS_POS);
+    };
+
     torchImageRef.current?.addEventListener("mousemove", handleMouse);
+    torchImageRef.current?.addEventListener("mouseleave", handleMouseLeave);
 
     return () => {
       torchImageRef.current?.removeEventListener("mousemove", handleMouse);
+      torchImageRef.current?.removeEventListener(
+        "mouseleave",
+        handleMouseLeave,
+      );
     };
   }, []);
 
@@ -120,7 +129,11 @@ const TorchCard = ({ image, side }: Props) => {
         className="pointer-events-none absolute inset-0 h-full w-full"
         style={{
           borderRadius: "50%",
-          border: "2px solid black",
+          border:
+            mouseX === MOUSE_OUT_OF_BOUNDS_POS ||
+            mouseY === MOUSE_OUT_OF_BOUNDS_POS
+              ? "none"
+              : "2px solid black",
           top: mouseY - gradientSize / (scaleFactor * 2),
           left: mouseX - gradientSize / 2,
           width: gradientSize,
