@@ -19,7 +19,7 @@ import {
 import { useStore } from "@nanostores/react";
 import { useEffect, useState } from "react";
 import { useHotkeys } from "react-hotkeys-hook";
-import type { TCard, TOutputCard } from "src/cards";
+import { isTOutputCard, type TCard, type TOutputCard } from "src/cards.d";
 import CardConfirmationDialog from "./CardConfirmationDialog";
 import FlippableTorchCard from "./FlippableTorchCard";
 import FlippyCard from "./FlippyCard";
@@ -157,6 +157,25 @@ const RandomCardManager = ({ cards, outputCards }: Props) => {
     return null;
   }
 
+  // If it's an output card, render FlippyCard
+  // If it's a deck card and eye tracking is enabled, render FlippyCard
+  const shouldRenderFlippyCard =
+    isTOutputCard(randomisedCards[activeCardIdx].data) || isEyeTracked;
+
+  const RenderableCard = shouldRenderFlippyCard ? (
+    <FlippyCard
+      key={randomisedCards[activeCardIdx].id}
+      {...randomisedCards[activeCardIdx]}
+      isDialogOpen={isDialogOpen}
+    />
+  ) : (
+    <FlippableTorchCard
+      key={randomisedCards[activeCardIdx].id}
+      {...randomisedCards[activeCardIdx]}
+      isDialogOpen={isDialogOpen}
+    />
+  );
+
   return (
     <>
       {enableDebug && (
@@ -217,23 +236,7 @@ const RandomCardManager = ({ cards, outputCards }: Props) => {
         </>
       )}
 
-      {isEyeTracked ? (
-        <FlippyCard
-          key={randomisedCards[activeCardIdx].id}
-          {...randomisedCards[activeCardIdx]}
-          isDialogOpen={isDialogOpen}
-        />
-      ) : (
-        <FlippableTorchCard
-          key={randomisedCards[activeCardIdx].id}
-          {...randomisedCards[activeCardIdx]}
-          isDialogOpen={isDialogOpen}
-        />
-      )}
-
-      {/* <TorchCard
-        image={randomisedCards[activeCardIdx]?.data?.imageFront}
-      /> */}
+      {RenderableCard}
 
       <CardConfirmationDialog
         isOpen={isDialogOpen}
