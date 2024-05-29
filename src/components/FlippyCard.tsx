@@ -3,6 +3,7 @@ import { cn } from "@/lib/utils";
 import { $enableDebug } from "@/stores/debugStore";
 import {
   $flips,
+  $imageBBox,
   $timeSpentBack,
   $timeSpentFront,
   type IFlips,
@@ -10,27 +11,43 @@ import {
 import { useStore } from "@nanostores/react";
 import type { ImageMetadata } from "astro";
 import { useEffect, useRef, useState } from "react";
+import TorchCard from "./TorchCard";
 
-type FlippyCardProps = any;
+type FlippyCardProps = {
+  data: any;
+  isDialogOpen: boolean;
+  useTorchCard?: boolean;
+};
 
-export default function FlippyCard({ data, isDialogOpen }: FlippyCardProps) {
+export default function FlippyCard({
+  data,
+  isDialogOpen,
+  useTorchCard = false,
+}: FlippyCardProps) {
   const { title } = data;
+  const imageRef = useRef<HTMLImageElement>(null);
 
   // imageFront may or may not exist
-  let image: ImageMetadata | undefined;
-
-  if (data?.imageFront) {
-    image = data.imageFront;
-  } else {
-    image = data.image;
-  }
-
+  let image: ImageMetadata | undefined = data?.imageFront || data.image;
   // imageBack may or may not exist
-  let imageBack: ImageMetadata | undefined;
+  let imageBack: ImageMetadata | undefined = data?.imageBack;
 
-  if (data?.imageBack) {
-    imageBack = data.imageBack;
-  }
+  // set the size of the image bounding box
+  useEffect(() => {
+    const imageBBox = imageRef.current?.getBoundingClientRect();
+    if (!imageBBox) return;
+
+    $imageBBox.set({
+      x: imageBBox.x,
+      y: imageBBox.y,
+      width: imageBBox.width,
+      height: imageBBox.height,
+      top: imageBBox.top,
+      right: imageBBox.right,
+      bottom: imageBBox.bottom,
+      left: imageBBox.left,
+    });
+  }, []);
 
   const [isFlipped, setIsFlipped] = useState(false);
   const [flips, setFlips] = useState<IFlips[]>([]);
@@ -109,11 +126,28 @@ export default function FlippyCard({ data, isDialogOpen }: FlippyCardProps) {
     setIsFlipped(!isFlipped);
   };
 
+  const renderCardContent = (
+    image: ImageMetadata | undefined,
+    side: "front" | "back",
+  ) => {
+    if (useTorchCard && image) {
+      return <TorchCard innerRef={imageRef} image={image} side={side} />;
+    }
+
+    return (
+      <img
+        ref={side === "front" ? imageRef : null}
+        src={image?.src}
+        alt={title || ""}
+        className="my-auto h-[90%] w-full object-contain"
+      />
+    );
+  };
+
   return (
-    <div className="mx-auto flex max-w-2xl items-center justify-center text-center">
+    <div className="mx-auto flex max-w-2xl items-center justify-center space-x-6 text-center">
       {enableDebug && (
-        <p>
-          Currently showing{" "}
+        <p className="text-right">
           {data.flippable && (
             <>
               <span className="font-bold">{!isFlipped ? "Front" : "Back"}</span>{" "}
@@ -124,36 +158,20 @@ export default function FlippyCard({ data, isDialogOpen }: FlippyCardProps) {
         </p>
       )}
 
-      <div
-        className={cn("flip-container", {
-          flip: isFlipped,
-        })}
-      >
+      <div className={cn("flip-container", { flip: isFlipped })}>
         <div className="flipper">
           <div className="front">
             {data.flippable && (
               <p className="w-full text-center font-bold">Front</p>
             )}
-
-            {image && (
-              <img
-                src={image.src}
-                alt={title || ""}
-                className="my-auto h-[90%] w-full object-contain"
-              />
-            )}
+            {renderCardContent(image, "front")}
           </div>
 
           <div className="back">
-            {data.flippable && <p className="text-center font-bold">Back</p>}
-
-            {imageBack && (
-              <img
-                src={imageBack.src}
-                alt={title || ""}
-                className="h-[95%] w-full object-contain"
-              />
+            {data.flippable && (
+              <p className="w-full text-center font-bold">Back</p>
             )}
+            {renderCardContent(imageBack, "back")}
           </div>
         </div>
       </div>
