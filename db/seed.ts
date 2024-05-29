@@ -9,6 +9,18 @@ export default async function () {
       timeStarted: new Date(),
       isEyeTracked: true,
       session_duration: 1000,
+      browserInfo: {
+        imageBBox: {
+          x: 0,
+          y: 0,
+          width: 0,
+          height: 0,
+          top: 0,
+          right: 0,
+          bottom: 0,
+          left: 0,
+        },
+      },
     },
     {
       id: 2,
@@ -16,6 +28,18 @@ export default async function () {
       timeStarted: new Date(),
       isEyeTracked: false,
       session_duration: 10000,
+      browserInfo: {
+        imageBBox: {
+          x: 0,
+          y: 0,
+          width: 0,
+          height: 0,
+          top: 0,
+          right: 0,
+          bottom: 0,
+          left: 0,
+        },
+      },
     },
   ]);
 

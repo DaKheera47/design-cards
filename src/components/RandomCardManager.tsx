@@ -19,9 +19,8 @@ import {
 import { useStore } from "@nanostores/react";
 import { useEffect, useState } from "react";
 import { useHotkeys } from "react-hotkeys-hook";
-import { isTOutputCard, type TCard, type TOutputCard } from "src/cards.d";
+import { type TCard, type TOutputCard } from "src/cards.d";
 import CardConfirmationDialog from "./CardConfirmationDialog";
-import FlippableTorchCard from "./FlippableTorchCard";
 import FlippyCard from "./FlippyCard";
 
 type Props = {
@@ -119,6 +118,18 @@ const RandomCardManager = ({ cards, outputCards }: Props) => {
           time_spent_back: timeSpentBack,
           page_url: window.location.href,
           mouse_pos: mousePos,
+          browserInfo: {
+            imageBBox: {
+              x: 0,
+              y: 0,
+              width: 0,
+              height: 0,
+              top: 0,
+              right: 0,
+              bottom: 0,
+              left: 0,
+            },
+          },
         },
       ]);
 
@@ -156,25 +167,6 @@ const RandomCardManager = ({ cards, outputCards }: Props) => {
   ) {
     return null;
   }
-
-  // If it's an output card, render FlippyCard
-  // If it's a deck card and eye tracking is enabled, render FlippyCard
-  const shouldRenderFlippyCard =
-    isTOutputCard(randomisedCards[activeCardIdx].data) || isEyeTracked;
-
-  const RenderableCard = shouldRenderFlippyCard ? (
-    <FlippyCard
-      key={randomisedCards[activeCardIdx].id}
-      {...randomisedCards[activeCardIdx]}
-      isDialogOpen={isDialogOpen}
-    />
-  ) : (
-    <FlippableTorchCard
-      key={randomisedCards[activeCardIdx].id}
-      {...randomisedCards[activeCardIdx]}
-      isDialogOpen={isDialogOpen}
-    />
-  );
 
   return (
     <>
@@ -236,7 +228,11 @@ const RandomCardManager = ({ cards, outputCards }: Props) => {
         </>
       )}
 
-      {RenderableCard}
+      <FlippyCard
+        key={randomisedCards[activeCardIdx].id}
+        {...randomisedCards[activeCardIdx]}
+        isDialogOpen={isDialogOpen}
+      />
 
       <CardConfirmationDialog
         isOpen={isDialogOpen}

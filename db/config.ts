@@ -8,6 +8,7 @@ const Session = defineTable({
     isEyeTracked: column.boolean(),
     // in ms
     session_duration: column.number(),
+    browserInfo: column.json(),
   },
 });
 

@@ -82,7 +82,7 @@ export default function FlippyCard({
     let frontTime = 0;
     let backTime = 0;
     let lastFlipTime = new Date(startTime.current).getTime();
-    let currentStateIsFront = true; // Assuming the initial state is front
+    let currentStateIsFront = true;
 
     flips.forEach((flip) => {
       const flipTime = new Date(flip.timestamp).getTime();

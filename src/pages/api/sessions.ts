@@ -93,6 +93,7 @@ export const POST: APIRoute = async ({ request }) => {
     device,
     starting_timestamp: time_started,
     isEyeTracked,
+    browserInfo,
   } = body[0];
 
   // regex to get only the numbers from the session name, "1" from "session 1"
@@ -114,6 +115,7 @@ export const POST: APIRoute = async ({ request }) => {
       timeStarted: new Date(time_started),
       session_duration,
       isEyeTracked,
+      browserInfo,
     })
     .returning({ id: Session.id });
 

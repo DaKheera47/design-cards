@@ -29,6 +29,32 @@ export const $flips = atom<IFlips[]>([]);
 export const $timeSpentFront = atom(0);
 export const $timeSpentBack = atom(0);
 
+interface IBoundingBox {
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+  top: number;
+  right: number;
+  bottom: number;
+  left: number;
+}
+
+export const $imageBBox = atom<IBoundingBox>({
+  x: -1,
+  y: -1,
+  width: -1,
+  height: -1,
+  top: -1,
+  right: -1,
+  bottom: -1,
+  left: -1,
+});
+
+export interface IBrowserInfo {
+  imageBBox: IBoundingBox;
+}
+
 export interface ISessionData {
   cardTitle: string;
   chosenAnswer: string;
@@ -43,6 +69,7 @@ export interface ISessionData {
   time_spent_back: number;
   page_url: string;
   mouse_pos: IMousePos[];
+  browserInfo: IBrowserInfo;
 }
 
 export const $sessionData = atom<ISessionData[]>([]);

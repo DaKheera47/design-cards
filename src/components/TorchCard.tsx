@@ -7,9 +7,10 @@ import React, { useEffect } from "react";
 type Props = {
   image: ImageMetadata;
   side: "front" | "back";
+  innerRef?: React.RefObject<HTMLImageElement>;
 };
 
-const TorchCard = ({ image, side }: Props) => {
+const TorchCard = ({ image, side, innerRef }: Props) => {
   const torchImageRef = React.useRef<HTMLDivElement>(null);
 
   // where the mouse is, large negative number to start with so it starts off screen
@@ -122,6 +123,7 @@ const TorchCard = ({ image, side }: Props) => {
         className="pointer-events-none inset-0 min-h-[60vh] w-full select-none object-cover"
         src={image.src}
         alt={image.src}
+        ref={innerRef ? innerRef : undefined}
       />
 
       {/* Outline for the mask */}
