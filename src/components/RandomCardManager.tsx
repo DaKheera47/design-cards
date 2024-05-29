@@ -19,7 +19,7 @@ import {
 import { useStore } from "@nanostores/react";
 import { useEffect, useState } from "react";
 import { useHotkeys } from "react-hotkeys-hook";
-import { type TCard, type TOutputCard } from "src/cards.d";
+import { isTOutputCard, type TCard, type TOutputCard } from "src/cards.d";
 import CardConfirmationDialog from "./CardConfirmationDialog";
 import FlippyCard from "./FlippyCard";
 
@@ -232,6 +232,11 @@ const RandomCardManager = ({ cards, outputCards }: Props) => {
         key={randomisedCards[activeCardIdx].id}
         {...randomisedCards[activeCardIdx]}
         isDialogOpen={isDialogOpen}
+        // If it's an output card, render without the torch
+        // If it's a deck card and eye tracking is enabled, render without the torch
+        useTorchCard={
+          !(isTOutputCard(randomisedCards[activeCardIdx].data) || isEyeTracked)
+        }
       />
 
       <CardConfirmationDialog
