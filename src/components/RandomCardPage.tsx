@@ -1,3 +1,5 @@
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Toaster } from "@/components/ui/toaster";
 import { toast } from "@/components/ui/use-toast";
 import {
@@ -23,6 +25,13 @@ const RandomCardPage = ({ cards, outputCards }: Props) => {
   const sessionData = useStore($sessionData);
   console.table(sessionData);
 
+  const resetSession = () => {
+    // reset the session data because
+    // the session has ended, and the data has been submitted
+    $isSessionStarted.set(false);
+    $sessionData.set([]);
+  };
+
   // when session ends, commit the session data to the database
   useEffect(() => {
     console.log("isSessionEnded", isSessionEnded);
@@ -44,14 +53,12 @@ const RandomCardPage = ({ cards, outputCards }: Props) => {
             });
 
             // reset the session data because
-            // the session has ended, and the data has been submitted
-            $isSessionStarted.set(false);
-            $sessionData.set([]);
+            // the data has been submitted and stored
+            resetSession();
           } else {
             // send an error toast
             toast({
               title:
-                // TODO: Add a link to download the data
                 "Error submitting data. Please download the data manually.",
               variant: "destructive",
             });
@@ -66,23 +73,46 @@ const RandomCardPage = ({ cards, outputCards }: Props) => {
     }
   }, [isSessionEnded]);
 
+  const handleDownload = () => {
+    const dataStr =
+      "data:text/json;charset=utf-8," +
+      encodeURIComponent(JSON.stringify(sessionData));
+    const downloadAnchorNode = document.createElement("a");
+    downloadAnchorNode.setAttribute("href", dataStr);
+    downloadAnchorNode.setAttribute("download", `session-${Date.now()}.json`);
+    // required for firefox
+    document.body.appendChild(downloadAnchorNode);
+    downloadAnchorNode.click();
+    downloadAnchorNode.remove();
+
+    // Reset session after download
+    resetSession();
+  };
+
   return (
     <>
       <div className="space-y-4">
         {!isSessionEnded && isSessionStarted ? (
           <RandomCardManager cards={cards} outputCards={outputCards} />
         ) : (
-          <div className="flex h-[80vh] w-full items-center justify-center">
+          <div className="mt-4 flex w-full items-center justify-center">
             <SessionInputCard />
           </div>
         )}
 
-        {/* if session ended */}
-        {/* // TODO: Add a link to download the data */}
-        {isSessionEnded && (
-          <div className="text-center">
-            <p className="text-3xl">Session Ended</p>
-          </div>
+        {isSessionEnded && sessionData.length > 0 && (
+          <Card className="mx-auto w-96">
+            <CardHeader>
+              <h1 className="text-lg">
+                Your session has ended, however the data has not been submitted.
+                Please download the data manually to keep a copy.
+              </h1>
+            </CardHeader>
+
+            <CardContent>
+              <Button onClick={handleDownload}>Download Data</Button>
+            </CardContent>
+          </Card>
         )}
       </div>
 
