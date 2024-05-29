@@ -9,7 +9,6 @@ import {
   $flips,
   $isEyeTracked,
   $isSessionEnded,
-  $isSessionStarted,
   $mousePos,
   $sessionData,
   $start_timestamp,
@@ -151,10 +150,6 @@ const RandomCardManager = ({ cards, outputCards }: Props) => {
             : ""
         }`,
       });
-
-      // reset the session
-      $isSessionStarted.set(false);
-      $sessionData.set([]);
 
       return -1;
     });

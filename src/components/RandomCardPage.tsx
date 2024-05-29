@@ -1,4 +1,5 @@
 import { Toaster } from "@/components/ui/toaster";
+import { toast } from "@/components/ui/use-toast";
 import {
   $isSessionEnded,
   $isSessionStarted,
@@ -25,6 +26,7 @@ const RandomCardPage = ({ cards, outputCards }: Props) => {
   // when session ends, commit the session data to the database
   useEffect(() => {
     console.log("isSessionEnded", isSessionEnded);
+
     if (isSessionEnded) {
       // make a call to /api/sessions with the data and print response
       fetch("/api/sessions", {
@@ -34,11 +36,34 @@ const RandomCardPage = ({ cards, outputCards }: Props) => {
         },
         body: JSON.stringify(sessionData),
       })
-        .then((res) => res.json())
+        .then((res) => {
+          if (res.status === 200) {
+            // send a success toast
+            toast({
+              title: "Data Submitted.",
+            });
+
+            // reset the session data because
+            // the session has ended, and the data has been submitted
+            $isSessionStarted.set(false);
+            $sessionData.set([]);
+          } else {
+            // send an error toast
+            toast({
+              title:
+                // TODO: Add a link to download the data
+                "Error submitting data. Please download the data manually.",
+              variant: "destructive",
+            });
+
+            // don't reset the session data because
+            // the data has not been submitted
+          }
+
+          res.json();
+        })
         .then((data) => console.log(data));
     }
-
-    $isSessionEnded.set(false);
   }, [isSessionEnded]);
 
   return (
@@ -53,6 +78,7 @@ const RandomCardPage = ({ cards, outputCards }: Props) => {
         )}
 
         {/* if session ended */}
+        {/* // TODO: Add a link to download the data */}
         {isSessionEnded && (
           <div className="text-center">
             <p className="text-3xl">Session Ended</p>
