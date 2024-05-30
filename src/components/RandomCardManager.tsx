@@ -7,6 +7,7 @@ import {
   $chosenDevice,
   $chosenSession,
   $flips,
+  $imageBBox,
   $isEyeTracked,
   $isSessionEnded,
   $mousePos,
@@ -47,6 +48,7 @@ const RandomCardManager = ({ cards, outputCards }: Props) => {
   const timeSpentFront = useStore($timeSpentFront);
   const timeSpentBack = useStore($timeSpentBack);
   const mousePos = useStore($mousePos);
+  const imageBBox = useStore($imageBBox);
 
   // toggle the debug mode
   useHotkeys("ctrl+shift+a", () => {
@@ -119,14 +121,14 @@ const RandomCardManager = ({ cards, outputCards }: Props) => {
           mouse_pos: mousePos,
           browserInfo: {
             imageBBox: {
-              x: 0,
-              y: 0,
-              width: 0,
-              height: 0,
-              top: 0,
-              right: 0,
-              bottom: 0,
-              left: 0,
+              width: imageBBox.width,
+              height: imageBBox.height,
+              x: imageBBox.x,
+              y: imageBBox.y,
+              top: imageBBox.top,
+              right: imageBBox.right,
+              bottom: imageBBox.bottom,
+              left: imageBBox.left,
             },
           },
         },

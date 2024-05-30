@@ -37,6 +37,15 @@ export default function FlippyCard({
     const imageBBox = imageRef.current?.getBoundingClientRect();
     if (!imageBBox) return;
 
+    // if any of the values are 0, don't c
+    if (
+      imageBBox.x === 0 ||
+      imageBBox.y === 0 ||
+      imageBBox.width === 0 ||
+      imageBBox.height === 0
+    )
+      return;
+
     $imageBBox.set({
       x: imageBBox.x,
       y: imageBBox.y,
