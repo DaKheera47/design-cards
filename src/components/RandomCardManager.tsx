@@ -15,6 +15,7 @@ import {
   $start_timestamp,
   $timeSpentBack,
   $timeSpentFront,
+  $torchSize,
 } from "@/stores/sessionStore";
 import { useStore } from "@nanostores/react";
 import { useEffect, useState } from "react";
@@ -49,6 +50,7 @@ const RandomCardManager = ({ cards, outputCards }: Props) => {
   const timeSpentBack = useStore($timeSpentBack);
   const mousePos = useStore($mousePos);
   const imageBBox = useStore($imageBBox);
+  const torchSize = useStore($torchSize);
 
   // toggle the debug mode
   useHotkeys("ctrl+shift+a", () => {
@@ -130,6 +132,9 @@ const RandomCardManager = ({ cards, outputCards }: Props) => {
               bottom: imageBBox.bottom,
               left: imageBBox.left,
             },
+            windowWidth: window.innerWidth,
+            windowHeight: window.innerHeight,
+            torchSize: torchSize,
           },
         },
       ]);

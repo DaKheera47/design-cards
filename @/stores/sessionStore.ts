@@ -11,6 +11,9 @@ export const $isSessionStarted = atom(false);
 
 export const $isSessionEnded = atom(false);
 
+// what the size of the area being revealed is
+export const $torchSize = atom(150);
+
 export interface IMousePos {
   x: number;
   y: number;
@@ -53,6 +56,9 @@ export const $imageBBox = atom<IBoundingBox>({
 
 export interface IBrowserInfo {
   imageBBox: IBoundingBox;
+  windowWidth: number;
+  windowHeight: number;
+  torchSize: number;
 }
 
 export interface ISessionData {
