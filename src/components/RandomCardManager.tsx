@@ -29,7 +29,7 @@ type Props = {
   outputCards: TOutputCard[];
 };
 
-const DEFAULT_CARD_FLIP_TIMER = 30000;
+const DEFAULT_CARD_FLIP_TIMER = 35830;
 
 const RandomCardManager = ({ cards, outputCards }: Props) => {
   const [activeCardIdx, setActiveCardIdx] = useState(0);
