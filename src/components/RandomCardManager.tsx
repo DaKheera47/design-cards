@@ -29,6 +29,7 @@ type Props = {
   outputCards: TOutputCard[];
 };
 
+// value derived from wpm of children
 const DEFAULT_CARD_FLIP_TIMER = 35830;
 
 const RandomCardManager = ({ cards, outputCards }: Props) => {
@@ -51,6 +52,7 @@ const RandomCardManager = ({ cards, outputCards }: Props) => {
   const mousePos = useStore($mousePos);
   const imageBBox = useStore($imageBBox);
   const torchSize = useStore($torchSize);
+  const showingOutputCard = isTOutputCard(randomisedCards[activeCardIdx]?.data);
 
   // toggle the debug mode
   useHotkeys("ctrl+shift+a", () => {
@@ -71,6 +73,12 @@ const RandomCardManager = ({ cards, outputCards }: Props) => {
   // show the dialog after the card flip timer
   useEffect(() => {
     const intervalId = setInterval(() => {
+      // flip automatically if the card is an output card
+      if (showingOutputCard) {
+        handleDialogClose("auto");
+        return;
+      }
+
       setIsDialogOpen(true);
     }, cardFlipTimer);
 
@@ -86,7 +94,9 @@ const RandomCardManager = ({ cards, outputCards }: Props) => {
   };
 
   // called when the user chooses an answer
-  const handleDialogClose = (chosenAnswer: "yes" | "no" | "unsure") => {
+  const handleDialogClose = (
+    chosenAnswer: "yes" | "no" | "unsure" | "auto",
+  ) => {
     setIsDialogOpen(false);
 
     setActiveCardIdx((activeCardIdx) => {
@@ -169,8 +179,6 @@ const RandomCardManager = ({ cards, outputCards }: Props) => {
   ) {
     return null;
   }
-
-  const showingOutputCard = isTOutputCard(randomisedCards[activeCardIdx].data);
 
   return (
     <>

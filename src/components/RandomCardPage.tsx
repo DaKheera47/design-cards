@@ -29,6 +29,7 @@ const RandomCardPage = ({ cards, outputCards }: Props) => {
     // reset the session data because
     // the session has ended, and the data has been submitted
     $isSessionStarted.set(false);
+    $isSessionEnded.set(false);
     $sessionData.set([]);
   };
 

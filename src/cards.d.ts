@@ -23,7 +23,14 @@ export function isTCard(data: TCardData | TOutputCardData): data is TCardData {
 }
 
 export function isTOutputCard(
-  data: TCardData | TOutputCardData | (TCardData | TOutputCardData),
+  data:
+    | TCardData
+    | TOutputCardData
+    | (TCardData | TOutputCardData)
+    | null
+    | undefined,
 ): data is TOutputCardData {
+  if (!data) return false;
+
   return (data as TOutputCardData).order !== undefined;
 }
