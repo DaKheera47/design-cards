@@ -94,9 +94,7 @@ const RandomCardManager = ({ cards, outputCards }: Props) => {
   };
 
   // called when the user chooses an answer
-  const handleDialogClose = (
-    chosenAnswer: "yes" | "no" | "unsure" | "auto",
-  ) => {
+  const handleDialogClose = (chosenAnswer: string) => {
     setIsDialogOpen(false);
 
     setActiveCardIdx((activeCardIdx) => {
@@ -251,6 +249,8 @@ const RandomCardManager = ({ cards, outputCards }: Props) => {
       />
 
       <CardConfirmationDialog
+        cards={cards}
+        currentCard={randomisedCards[activeCardIdx]}
         isOpen={isDialogOpen}
         setIsOpen={setIsDialogOpen}
         title="Continue?"

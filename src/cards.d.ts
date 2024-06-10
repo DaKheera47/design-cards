@@ -17,6 +17,8 @@ export type TOutputCardData =
   | CollectionEntry<"functionCardsOutput">["data"]
   | CollectionEntry<"magicCardsOutput">["data"];
 
+export type TTechDeckCardData = CollectionEntry<"technologyCardsDeck">["data"];
+
 // Type guards
 export function isTCard(data: TCardData | TOutputCardData): data is TCardData {
   return (data as TCardData).imageFront !== undefined;
@@ -33,4 +35,14 @@ export function isTOutputCard(
   if (!data) return false;
 
   return (data as TOutputCardData).order !== undefined;
+}
+
+export function isTechnologyDeckCard(
+  data: TCardData,
+): data is CollectionEntry<"technologyCardsDeck">["data"] {
+  const answers = (data as CollectionEntry<"technologyCardsDeck">["data"])
+    .answers;
+
+  // Check if answers is defined and not an empty array
+  return answers !== undefined && answers.length > 0;
 }

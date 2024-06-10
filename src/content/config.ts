@@ -5,6 +5,7 @@ const technologyCardsDeck = defineCollection({
   schema: ({ image }) =>
     z.object({
       title: z.string().optional(),
+      answers: z.array(z.string()),
       body: z.string().optional(),
       imageFront: image(),
       imageBack: image().optional(),
