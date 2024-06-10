@@ -23,7 +23,7 @@ type Props = {
   isOpen: boolean;
   setIsOpen: (isOpen: boolean) => void;
   title?: string;
-  description?: string;
+  description?: string[];
   onClose: (chosenAnswer: string) => void;
 };
 
@@ -117,8 +117,10 @@ export default function CardConfirmationDialog({
               </DialogTitle>
             )}
 
-            {description && (
-              <Description className="capitalize">{description}</Description>
+            {description && description.length > 0 && (
+              <Description className="capitalize">
+                {getRandomElement(description)}
+              </Description>
             )}
 
             <div className="grid grid-cols-3 gap-4">
