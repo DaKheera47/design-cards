@@ -170,6 +170,8 @@ const RandomCardManager = ({ cards, outputCards }: Props) => {
     return null;
   }
 
+  const showingOutputCard = isTOutputCard(randomisedCards[activeCardIdx].data);
+
   return (
     <>
       {enableDebug && (
@@ -236,9 +238,8 @@ const RandomCardManager = ({ cards, outputCards }: Props) => {
         isDialogOpen={isDialogOpen}
         // If it's an output card, render without the torch
         // If it's a deck card and eye tracking is enabled, render without the torch
-        useTorchCard={
-          !(isTOutputCard(randomisedCards[activeCardIdx].data) || isEyeTracked)
-        }
+        useTorchCard={!(showingOutputCard || isEyeTracked)}
+        isOutputCard={showingOutputCard}
       />
 
       <CardConfirmationDialog

@@ -17,12 +17,14 @@ type FlippyCardProps = {
   data: any;
   isDialogOpen: boolean;
   useTorchCard?: boolean;
+  isOutputCard?: boolean;
 };
 
 export default function FlippyCard({
   data,
   isDialogOpen,
   useTorchCard = false,
+  isOutputCard = false,
 }: FlippyCardProps) {
   const { title } = data;
   const imageRef = useRef<HTMLImageElement>(null);
@@ -148,13 +150,21 @@ export default function FlippyCard({
         ref={side === "front" ? imageRef : null}
         src={image?.src}
         alt={title || ""}
-        className="my-auto h-[90%] w-full object-contain"
+        className={cn(
+          "my-auto h-[90%] w-full object-contain",
+          isOutputCard ? "max-h-[calc(100vh-100px)]" : "max-w-2xl",
+        )}
       />
     );
   };
 
   return (
-    <div className="mx-auto flex max-w-2xl items-center justify-center space-x-6 text-center">
+    <div
+      className={cn(
+        "mx-auto flex items-center justify-center space-x-6 text-center",
+        isOutputCard ? "max-h-[calc(100vh-100px)]" : "max-w-2xl",
+      )}
+    >
       {enableDebug && (
         <p className="text-right">
           {data.flippable && (
@@ -169,7 +179,12 @@ export default function FlippyCard({
 
       <div className={cn("flip-container", { flip: isFlipped })}>
         <div className="flipper">
-          <div className="front">
+          <div
+            className={cn(
+              "front",
+              isOutputCard ? "max-h-[calc(100vh-100px)]" : "max-w-2xl",
+            )}
+          >
             {data.flippable && (
               <p className="w-full text-center font-bold">Front</p>
             )}
