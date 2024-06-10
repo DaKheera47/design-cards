@@ -245,7 +245,7 @@ const RandomCardManager = ({ cards, outputCards }: Props) => {
         isOpen={isDialogOpen}
         setIsOpen={setIsDialogOpen}
         title="Continue?"
-        description="Did you understand what was written on the card?"
+        description="Did the information on the card help you understand the technology?"
         onClose={handleDialogClose}
       />
     </>
