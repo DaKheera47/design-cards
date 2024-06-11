@@ -23,21 +23,19 @@ import {
 } from "@/stores/sessionStore";
 import { useStore } from "@nanostores/react";
 
-const POSSIBLE_SESSIONS = [
-  "Session 1",
-  "Session 2",
-  "Session 3",
-  "Session 4",
-  "Session 5",
-];
+// make a list of possible sessions
+// session 1 to session 10
+const POSSIBLE_SESSIONS = Array.from(
+  { length: 10 },
+  (_, i) => `Session ${i + 1}`,
+);
 
-const POSSIBLE_DEVICES = [
-  "Device 1",
-  "Device 2",
-  "Device 3",
-  "Device 4",
-  "Device 5",
-];
+// make a list of possible devices
+// device 1 to device 10
+const POSSIBLE_DEVICES = Array.from(
+  { length: 10 },
+  (_, i) => `Device ${i + 1}`,
+);
 
 export default function SessionInputCard() {
   const isEyeTracked = useStore($isEyeTracked);
