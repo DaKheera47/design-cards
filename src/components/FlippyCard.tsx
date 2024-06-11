@@ -208,9 +208,7 @@ export default function FlippyCard({
             </a>
           )}
 
-          <Button onClick={handleClick}>
-            {isFlipped ? "Show Front" : "Show Back"}
-          </Button>
+          <Button onClick={handleClick}>Flip Card</Button>
         </div>
       )}
     </div>
