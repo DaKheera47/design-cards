@@ -70,6 +70,9 @@ export default function CardConfirmationDialog({
 
   // Ensure we have only 3 options, including the correct answer
   const selectedAnswers = useMemo(() => {
+    //! if it's an output card, we don't need to show the dialog
+    if (isTOutputCard(currentCard.data)) return;
+
     //* this means that only the first answer in
     //* the answers array is correct and shown.
     const correctAnswer = _currentCard.answers[0];
@@ -124,7 +127,7 @@ export default function CardConfirmationDialog({
             )}
 
             <div className="grid grid-cols-3 gap-4">
-              {selectedAnswers.map((label) => (
+              {selectedAnswers?.map((label) => (
                 <Button
                   key={label}
                   onClick={() => {
