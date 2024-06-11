@@ -110,7 +110,7 @@ export default function CardConfirmationDialog({
       {/* on close is empty to prevent clicking off without choosing an option */}
       <Dialog onClose={() => {}} className="relative z-50">
         {/* The backdrop, rendered as a fixed sibling to the panel container */}
-        <div className="fixed inset-0 bg-black/30" aria-hidden="true" />
+        <div className="fixed inset-0 bg-black/95" aria-hidden="true" />
 
         <div className="fixed inset-0 flex w-screen items-center justify-center p-4">
           <DialogPanel className="max-w-2xl space-y-4 rounded-md border bg-card p-12">
