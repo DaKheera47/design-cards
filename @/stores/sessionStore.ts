@@ -1,7 +1,7 @@
 import { atom } from "nanostores";
 
 // there will be more tracked than untracked sessions
-export const $isEyeTracked = atom(true);
+export const $isEyeTracked = atom(false);
 
 export const $chosenSession = atom<string | undefined>(undefined);
 
