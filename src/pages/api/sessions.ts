@@ -1,6 +1,12 @@
 import type { ISessionData } from "@/stores/sessionStore";
 import type { APIRoute } from "astro";
 import { Session, SessionEvent, db, eq } from "astro:db";
+import dayjs from "dayjs";
+import duration from "dayjs/plugin/duration";
+
+// extend dayjs with duration plugin
+dayjs.extend(duration);
+
 import type { TSessionWithEvents } from "../../sessions";
 
 const isBodyValid = (body: ISessionData[] | undefined) => {
@@ -30,33 +36,31 @@ function calculateSessionDuration(
   startDate: string | Date,
   events: ISessionData[],
 ): { hours: number; minutes: number; seconds: number; milliseconds: number } {
-  // Ensure the startDate is a Date object
-  const sessionStart: Date = new Date(startDate);
+  // Ensure the startDate is a dayjs object
+  const sessionStart = dayjs(startDate);
 
   // Initialize the last submission timestamp to the start date initially
-  let lastSubmission: Date = sessionStart;
+  let lastSubmission = sessionStart;
 
   // Loop through all events to find the latest submission timestamp
   events.forEach((event) => {
-    const submissionTime: Date = new Date(event.submission_timestamp);
-    if (submissionTime > lastSubmission) {
+    const submissionTime = dayjs(event.submission_timestamp);
+    if (submissionTime.isAfter(lastSubmission)) {
       lastSubmission = submissionTime;
     }
   });
 
   // Calculate the duration in milliseconds
-  const duration: number = lastSubmission.getTime() - sessionStart.getTime();
+  const duration = lastSubmission.diff(sessionStart);
 
   // Convert the duration from milliseconds to a more readable format (e.g., hours, minutes, seconds)
-  const seconds: number = Math.floor((duration / 1000) % 60);
-  const minutes: number = Math.floor((duration / (1000 * 60)) % 60);
-  const hours: number = Math.floor((duration / (1000 * 60 * 60)) % 24);
+  const durationInMillis = dayjs.duration(duration);
 
   return {
-    hours: hours,
-    minutes: minutes,
-    seconds: seconds,
-    milliseconds: duration,
+    hours: durationInMillis.hours(),
+    minutes: durationInMillis.minutes(),
+    seconds: durationInMillis.seconds(),
+    milliseconds: durationInMillis.asMilliseconds(),
   };
 }
 
@@ -127,7 +131,7 @@ export const POST: APIRoute = async ({ request }) => {
   // see more: https://orm.drizzle.team/docs/batch-api
   // @ts-ignore
   const queries = [];
-  body.map((event) => {
+  body.forEach((event) => {
     queries.push(
       db.insert(SessionEvent).values({
         card_idx: event.cardIdx,
@@ -151,7 +155,7 @@ export const POST: APIRoute = async ({ request }) => {
 
   return new Response(
     JSON.stringify({
-      message: body,
+      message: "Session uploaded successfully",
     }),
   );
 };
