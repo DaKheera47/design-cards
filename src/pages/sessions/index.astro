@@ -2,7 +2,11 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Session, db } from "astro:db";
 import dayjs from "dayjs";
+import duration from "dayjs/plugin/duration";
 import Layout from "../../layouts/Layout.astro";
+
+// extend dayjs with duration plugin
+dayjs.extend(duration);
 
 // get all data
 const sessions = await db.select().from(Session);
@@ -20,21 +24,38 @@ const sessions = await db.select().from(Session);
     <div class="grid grid-cols-3 gap-4">
       {
         sessions.map((session) => {
+          const timeStarted = dayjs(session.timeStarted);
+          const sessionEnd = timeStarted.add(
+            session.session_duration,
+            "milliseconds",
+          );
+          const sessionDuration = dayjs.duration(
+            session.session_duration,
+            "milliseconds",
+          );
+
+          const humanDuration = sessionDuration.format("m[m] s[s]");
+
           return (
             <a href={`/sessions/${session.id}`}>
               <Card className="hover:bg-white/10 transition-colors">
                 <CardHeader>
-                  <CardTitle>Session ID: {session.id}</CardTitle>
+                  <CardTitle>
+                    Session {session.id}, Device {session.device_identifier}
+                  </CardTitle>
                 </CardHeader>
 
                 <CardContent>
-                  <p>Device Identifier: {session.device_identifier}</p>
                   <p>
                     Session Start:{" "}
-                    {dayjs(session.timeStarted).format(
-                      "h:mm:ss A, MMMM D YYYY",
-                    )}
+                    {timeStarted.format("h:mm:ss A, MMMM D YYYY")}
                   </p>
+
+                  <p>
+                    Session End: {sessionEnd.format("h:mm:ss A, MMMM D YYYY")}
+                  </p>
+
+                  <p>Session Duration: {humanDuration}</p>
                 </CardContent>
               </Card>
             </a>
