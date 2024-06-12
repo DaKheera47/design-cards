@@ -1,6 +1,7 @@
 import type { ISessionData } from "@/stores/sessionStore";
 import type { APIRoute } from "astro";
-import { Session, SessionEvent, db } from "astro:db";
+import { Session, SessionEvent, db, eq } from "astro:db";
+import type { TSessionWithEvents } from "../../sessions";
 
 const isBodyValid = (body: ISessionData[] | undefined) => {
   if (!body) {
@@ -152,6 +153,50 @@ export const POST: APIRoute = async ({ request }) => {
     JSON.stringify({
       message: body,
     }),
+  );
+};
+
+// called when the user wants to get all the sessions
+export const GET: APIRoute = async ({ request }) => {
+  const sessions = await db.select().from(Session);
+
+  let newSessions: TSessionWithEvents[] = sessions.map((session) => {
+    return {
+      ...session,
+      events: [],
+    };
+  });
+  let data = [];
+
+  for (let i = 0; i < newSessions.length; i++) {
+    const session = newSessions[i];
+    const session_id = session.id;
+
+    // get all the associated SessionEvents of this event
+    const sessionEvents = await db
+      .select()
+      .from(SessionEvent)
+      .where(eq(SessionEvent.session_id, session_id));
+
+    // add the session events to the session object
+    session.events = sessionEvents;
+
+    data.push({
+      ...session,
+    });
+  }
+
+  return new Response(
+    JSON.stringify({
+      data,
+    }),
+    {
+      status: 200,
+      headers: {
+        "Content-Type": "application/json",
+        "Content-Disposition": "attachment; filename=sessions.json",
+      },
+    },
   );
 };
 

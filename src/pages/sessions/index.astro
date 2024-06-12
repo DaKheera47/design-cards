@@ -1,4 +1,5 @@
 ---
+import { buttonVariants } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Session, db } from "astro:db";
 import dayjs from "dayjs";
@@ -20,6 +21,16 @@ const sessions = await db.select().from(Session);
     <h1 class="mb-6 text-balance text-center text-2xl capitalize">
       See all sessions recorded so far
     </h1>
+
+    <div>
+      <button
+        type="button"
+        id="download"
+        class:list={[buttonVariants({ variant: "default" }), "mb-10 w-full"]}
+      >
+        Download all(!) Data for all sessions
+      </button>
+    </div>
 
     <div class="grid grid-cols-3 gap-4">
       {
@@ -65,3 +76,26 @@ const sessions = await db.select().from(Session);
     </div>
   </section>
 </Layout>
+
+<script>
+  const button = document.querySelector("#download");
+
+  async function downloadJson() {
+    const response = await fetch("/api/sessions");
+    const data = await response.json();
+
+    const blob = new Blob([JSON.stringify(data, null, 2)], {
+      type: "application/json",
+    });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "sessions.json";
+    a.click();
+    URL.revokeObjectURL(url);
+  }
+
+  if (button) {
+    button.addEventListener("click", downloadJson);
+  }
+</script>
