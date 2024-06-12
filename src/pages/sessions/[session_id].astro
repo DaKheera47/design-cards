@@ -1,0 +1,107 @@
+---
+import { buttonVariants } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { SessionEvent, db, eq } from "astro:db";
+import dayjs from "dayjs";
+import Layout from "../../layouts/Layout.astro";
+
+// get the sessionId from the url
+const { session_id } = Astro.params;
+
+// get all the associated SessionEvents of this event
+const sessionEvents = await db
+  .select()
+  .from(SessionEvent)
+  // @ts-ignore -- TS doesn't like eq coming from Astro
+  .where(eq(SessionEvent.session_id, session_id));
+
+const sessionEventsJson = JSON.stringify(sessionEvents);
+---
+
+<Layout
+  title="Session"
+  dark
+>
+  <section class="max-h-screen py-8">
+    <div>
+      <a
+        href="/sessions"
+        class={buttonVariants({ variant: "link" })}
+      >
+        Home
+      </a>
+
+      <h1 class="mb-6 text-balance text-center text-2xl capitalize">
+        session {session_id} - {
+          sessionEvents.length === 0 ? "No" : sessionEvents.length
+        }
+        Session Events
+      </h1>
+    </div>
+
+    <div class="mb-8">
+      <button
+        data-json={sessionEventsJson}
+        data-session-id={session_id}
+        id="download"
+        class:list={[buttonVariants({ variant: "default" }), "mb-10 w-full"]}
+      >
+        Download Data for session {session_id}
+      </button>
+    </div>
+
+    <div class="grid grid-cols-1 gap-4">
+      {
+        sessionEvents.map((sessionEvent) => {
+          return (
+            <Card>
+              <CardHeader>
+                <CardTitle>Session ID: {sessionEvent.id}</CardTitle>
+              </CardHeader>
+
+              <CardContent>
+                <div class="flex space-x-2">
+                  <p>Time Front: {sessionEvent.time_spent_front}</p>
+                  <p>Time Back: {sessionEvent.time_spent_back}</p>
+                </div>
+                <p>
+                  {dayjs(sessionEvent.starting_timestamp).format("H:mm:ss")}
+                  {" -> "}
+                  {dayjs(sessionEvent.submission_timestamp).format("H:mm:ss")}
+                </p>
+              </CardContent>
+            </Card>
+          );
+        })
+      }
+    </div>
+  </section>
+</Layout>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const button = document.querySelector("#download");
+    if (!button) return;
+
+    const downloadJson = () => {
+      const data = button.getAttribute("data-json");
+      const session_id = button.getAttribute("data-session-id");
+
+      if (!data) return;
+
+      const json = JSON.parse(JSON.stringify(data, null, 4));
+
+      const blob = new Blob([json], { type: "application/json" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `session-${session_id}.json`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    };
+
+    button.addEventListener("click", downloadJson);
+  });
+</script>
