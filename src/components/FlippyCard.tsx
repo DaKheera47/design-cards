@@ -160,6 +160,11 @@ export default function FlippyCard({
 
   return (
     <div
+      // https://stackoverflow.com/a/737043
+      onContextMenu={(e) => {
+        e.preventDefault();
+        return false;
+      }}
       className={cn(
         "mx-auto flex items-center justify-center space-x-6 text-center",
         isOutputCard ? "max-h-[calc(100vh-100px)]" : "max-w-2xl",
