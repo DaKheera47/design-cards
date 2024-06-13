@@ -32,6 +32,7 @@ const magicCardsDeck = defineCollection({
   schema: ({ image }) =>
     z.object({
       title: z.string().optional(),
+      answers: z.array(z.string()),
       body: z.string().optional(),
       image: image(),
       words: z.string().optional(),
