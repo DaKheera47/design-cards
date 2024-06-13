@@ -54,48 +54,65 @@ export default function CardConfirmationDialog({
   onClose,
 }: Props) {
   const sessionData = useStore($sessionData);
-
-  const cardsData = cards.map(
-    (card) => card.data,
-  ) as unknown as TTechDeckCardData[];
-
-  const answers = cardsData.map((card) => {
-    return {
-      label: getRandomElement(card.answers),
-      cardId: cards.find((c) => c.data === card)?.id,
-    };
-  });
-
-  let _currentCard: TTechDeckCardData = currentCard.data as TTechDeckCardData;
+  const isTechDeckCard = isTechnologyDeckCard(cards[0].data);
 
   // Ensure we have only 3 options, including the correct answer
   const selectedAnswers = useMemo(() => {
-    //! if it's an output card, we don't need to show the dialog
+    // if it's an output card, we don't need to show the dialog
     if (isTOutputCard(currentCard.data)) return;
 
-    //* this means that only the first answer in
-    //* the answers array is correct and shown.
-    const correctAnswer = _currentCard.answers[0];
-    // get a list of answers without duplicates
-    const uniqueAnswers = Array.from(new Set(answers.map((a) => a.label)));
+    // yes, no, unsure only if if it's not a tech deck card
+    let answers: { label: string; cardId?: string }[] = [
+      {
+        label: "Yes",
+      },
+      {
+        label: "No",
+      },
+      {
+        label: "Maybe",
+      },
+    ];
 
-    // make a list of all the answers except the correct one
-    const filteredAnswers = uniqueAnswers.filter(
-      (answer) => answer !== correctAnswer,
-    );
+    if (isTechDeckCard) {
+      // force cast to TTechDeckCardData
+      const cardsData = cards.map(
+        (card) => card.data,
+      ) as unknown as TTechDeckCardData[];
 
-    // shuffle the list and take 2 random answers
-    const randomAnswers = shuffleArray(filteredAnswers).slice(0, 2);
-    // shuffle the list of answers and add the correct answer to display
-    return shuffleArray([correctAnswer, ...randomAnswers]);
+      answers = cardsData.map((card) => {
+        return {
+          label: getRandomElement(card.answers),
+          cardId: cards.find((c) => c.data === card)?.id,
+        };
+      });
+
+      let _currentCard: TTechDeckCardData =
+        currentCard.data as TTechDeckCardData;
+
+      //* this means that only the first answer in
+      //* the answers array is correct and shown.
+      const correctAnswer = _currentCard.answers[0];
+      // get a list of answers without duplicates
+      const uniqueAnswers = Array.from(new Set(answers.map((a) => a.label)));
+
+      // make a list of all the answers except the correct one
+      const filteredAnswers = uniqueAnswers.filter(
+        (answer) => answer !== correctAnswer,
+      );
+
+      // shuffle the list and take 2 random answers
+      const randomAnswers = shuffleArray(filteredAnswers).slice(0, 2);
+      // shuffle the list of answers and add the correct answer to display
+      return shuffleArray([correctAnswer, ...randomAnswers]);
+    }
+
+    // return the default list of answers
+    return shuffleArray(answers.map((a) => a.label));
   }, [sessionData]);
 
-  //! if it's an output card, we don't need to show the dialog
+  // if it's an output card, we don't need to show the dialog
   if (isTOutputCard(currentCard.data)) return;
-
-  //! This means that the card doesn't work for anything
-  //! except for the technology deck cards
-  if (!isTechnologyDeckCard(cards[0].data)) return;
 
   return (
     <Transition
@@ -113,7 +130,7 @@ export default function CardConfirmationDialog({
         <div className="fixed inset-0 bg-black/95" aria-hidden="true" />
 
         <div className="fixed inset-0 flex w-screen items-center justify-center p-4">
-          <DialogPanel className="max-w-2xl space-y-4 rounded-md border bg-card p-12">
+          <DialogPanel className="min-w-96 max-w-2xl space-y-4 rounded-md border bg-card p-12">
             {title && (
               <DialogTitle className="font-bold capitalize">
                 {title}
