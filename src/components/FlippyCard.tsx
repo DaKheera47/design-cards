@@ -167,7 +167,7 @@ export default function FlippyCard({
         return false;
       }}
       className={cn(
-        "mx-auto flex select-none items-center justify-center space-x-6 text-center",
+        "drag-none mx-auto flex select-none items-center justify-center space-x-6 text-center",
         isOutputCard ? "max-h-[calc(100vh-100px)]" : "max-w-2xl",
       )}
     >

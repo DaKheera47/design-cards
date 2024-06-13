@@ -120,7 +120,7 @@ const TorchCard = ({ image, side, innerRef }: Props) => {
       className="relative mx-auto min-h-[60vh] overflow-hidden"
     >
       <img
-        className="pointer-events-none inset-0 min-h-[60vh] w-full select-none object-cover"
+        className="drag-none pointer-events-none inset-0 min-h-[60vh] w-full select-none object-cover"
         src={image.src}
         alt={image.src}
         ref={innerRef ? innerRef : undefined}
