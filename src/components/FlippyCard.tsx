@@ -150,6 +150,7 @@ export default function FlippyCard({
         ref={side === "front" ? imageRef : null}
         src={image?.src}
         alt={title || ""}
+        draggable={false}
         className={cn(
           "my-auto h-[90%] w-full object-contain",
           isOutputCard ? "max-h-[calc(100vh-100px)]" : "max-w-2xl",
@@ -166,7 +167,7 @@ export default function FlippyCard({
         return false;
       }}
       className={cn(
-        "mx-auto flex items-center justify-center space-x-6 text-center",
+        "mx-auto flex select-none items-center justify-center space-x-6 text-center",
         isOutputCard ? "max-h-[calc(100vh-100px)]" : "max-w-2xl",
       )}
     >

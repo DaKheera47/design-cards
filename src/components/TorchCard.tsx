@@ -124,6 +124,7 @@ const TorchCard = ({ image, side, innerRef }: Props) => {
         src={image.src}
         alt={image.src}
         ref={innerRef ? innerRef : undefined}
+        draggable={false}
       />
 
       {/* Outline for the mask */}
