@@ -1,5 +1,8 @@
 {
     "title": "controller",
+    "answers": [
+        "Uses a Controller"
+    ],
     "body": "",
     "words": "FUNCTION IT RESPONDS TO A CONTROLLER INPUT",
     "image": "/src/assets/function-cards/controller.webp",

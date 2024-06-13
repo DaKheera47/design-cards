@@ -1,5 +1,8 @@
 {
     "title": "whosinroom",
+    "answers": [
+        "Knows who is in the room"
+    ],
     "body": "",
     "words": "FUNCTION IT KNOWS WHO IS IN THE ROOM",
     "image": "/src/assets/function-cards/whosinroom.webp",

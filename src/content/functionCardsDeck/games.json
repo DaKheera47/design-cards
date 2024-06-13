@@ -1,5 +1,8 @@
 {
     "title": "games",
+    "answers": [
+        "Plays Games"
+    ],
     "body": "",
     "words": "FUNCTION IT PLAYS GAMES",
     "image": "/src/assets/function-cards/games.webp",

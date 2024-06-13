@@ -1,5 +1,8 @@
 {
     "title": "sendinfo",
+    "answers": [
+        "Sends Information"
+    ],
     "body": "",
     "words": "FUNCTION IT SENDS INFORMATION",
     "image": "/src/assets/function-cards/sendinfo.webp",

@@ -1,5 +1,8 @@
 {
     "title": "internet",
+    "answers": [
+        "Connects to the internet"
+    ],
     "body": "",
     "words": "FUNCTION IT CONNECT TO THE INTERNET",
     "image": "/src/assets/function-cards/internet.webp",

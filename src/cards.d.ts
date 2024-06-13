@@ -37,9 +37,11 @@ export function isTOutputCard(
   return (data as TOutputCardData).order !== undefined;
 }
 
-export function isTechnologyDeckCard(
+export function hasAnswersInDeckCard(
   data: TCardData,
 ): data is CollectionEntry<"technologyCardsDeck">["data"] {
+  //! this is typecasing to technologyCardsDeck, but these
+  //! aren't the only cards that can have answers
   const answers = (data as CollectionEntry<"technologyCardsDeck">["data"])
     .answers;
 

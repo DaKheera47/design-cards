@@ -1,5 +1,8 @@
 {
     "title": "app",
+    "answers": [
+        "Apps"
+    ],
     "body": "",
     "words": "FUNCTION IT USES AN APP",
     "image": "/src/assets/function-cards/app.webp",

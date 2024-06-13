@@ -1,5 +1,8 @@
 {
     "title": "sound",
+    "answers": [
+        "Plays a sound"
+    ],
     "body": "",
     "words": "FUNCTION IT PLAYS A SOUND",
     "image": "/src/assets/function-cards/sound.webp",

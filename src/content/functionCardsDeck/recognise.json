@@ -1,7 +1,10 @@
 {
     "title": "recognise",
+    "answers": [
+        "Recognises your face"
+    ],
     "body": "",
-    "words": "FUNCTION IT RECOGNISES YOUR FACE L",
+    "words": "FUNCTION IT RECOGNISES YOUR FACE",
     "image": "/src/assets/function-cards/recognise.webp",
     "flippable": false,
     "word_count": 6

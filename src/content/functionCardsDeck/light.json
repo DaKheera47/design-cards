@@ -1,5 +1,8 @@
 {
     "title": "light",
+    "answers": [
+        "Lights up"
+    ],
     "body": "",
     "words": "FUNCTION IT LIGHTS",
     "image": "/src/assets/function-cards/light.webp",

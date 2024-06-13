@@ -11,7 +11,7 @@ import { useStore } from "@nanostores/react";
 import { useMemo } from "react";
 import {
   isTOutputCard,
-  isTechnologyDeckCard,
+  hasAnswersInDeckCard,
   type TCard,
   type TOutputCard,
   type TTechDeckCardData,
@@ -54,7 +54,7 @@ export default function CardConfirmationDialog({
   onClose,
 }: Props) {
   const sessionData = useStore($sessionData);
-  const isTechDeckCard = isTechnologyDeckCard(cards[0].data);
+  const hasAnswers = hasAnswersInDeckCard(cards[0].data);
 
   // Ensure we have only 3 options, including the correct answer
   const selectedAnswers = useMemo(() => {
@@ -74,7 +74,9 @@ export default function CardConfirmationDialog({
       },
     ];
 
-    if (isTechDeckCard) {
+    if (hasAnswers) {
+      //! this is typecasing to technologyCardsDeck, but these
+      //! aren't the only cards that can have answers
       // force cast to TTechDeckCardData
       const cardsData = cards.map(
         (card) => card.data,
