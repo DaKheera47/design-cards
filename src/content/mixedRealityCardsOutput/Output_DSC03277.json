@@ -1,7 +1,7 @@
 {
-    "title": "Output File 4",
+    "title": "Output File 5",
     "body": "",
     "image": "/src/assets/mixed-reality-cards/Output_DSC03277.webp",
-    "flippable": true,
-    "order": 4
+    "flippable": false,
+    "order": 5
 }
