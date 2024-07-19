@@ -1,0 +1,10 @@
+{
+    "title": "P6",
+    "answers": [],
+    "body": "",
+    "imageFront": "/src/assets/mixed-reality-cards/p6-front.webp",
+    "imageBack": "/src/assets/mixed-reality-cards/p6-back.webp",
+    "flippable": true,
+    "num_words_front": 10,
+    "num_words_back": 34
+}
