@@ -15,6 +15,10 @@ const sections = [
     title: "Function Cards",
     link: "/function-cards/study",
   },
+  {
+    title: "Mixed Reality Cards",
+    link: "/mixed-reality-cards/study",
+  },
 ];
 ---
 
@@ -31,7 +35,10 @@ const sections = [
       <hr />
     </div>
 
-    <div class="grid w-full grid-cols-3 gap-4">
+    <div
+      class="grid w-full gap-2"
+      style={`grid-template-columns: repeat(${sections.length}, minmax(0, 1fr));`}
+    >
       {
         sections.map((section) => (
           <a

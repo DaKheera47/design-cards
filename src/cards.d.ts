@@ -3,18 +3,22 @@ import type { CollectionEntry } from "astro:content";
 export type TCard =
   | CollectionEntry<"technologyCardsDeck">
   | CollectionEntry<"functionCardsDeck">
+  | CollectionEntry<"mixedRealityCardsDeck">
   | CollectionEntry<"magicCardsDeck">;
 export type TCardData =
   | CollectionEntry<"technologyCardsDeck">["data"]
   | CollectionEntry<"functionCardsDeck">["data"]
+  | CollectionEntry<"mixedRealityCardsDeck">["data"]
   | CollectionEntry<"magicCardsDeck">["data"];
 export type TOutputCard =
   | CollectionEntry<"technologyCardsOutput">
   | CollectionEntry<"functionCardsOutput">
+  | CollectionEntry<"mixedRealityCardsOutput">
   | CollectionEntry<"magicCardsOutput">;
 export type TOutputCardData =
   | CollectionEntry<"technologyCardsOutput">["data"]
   | CollectionEntry<"functionCardsOutput">["data"]
+  | CollectionEntry<"mixedRealityCardsOutput">["data"]
   | CollectionEntry<"magicCardsOutput">["data"];
 
 export type TTechDeckCardData = CollectionEntry<"technologyCardsDeck">["data"];

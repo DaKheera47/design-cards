@@ -31,6 +31,13 @@ export async function getStaticPaths() {
           output: await getCollection("technologyCardsOutput"),
         },
       },
+      {
+        slug: "mixed-reality-cards",
+        props: {
+          deck: await getCollection("mixedRealityCardsDeck"),
+          output: await getCollection("mixedRealityCardsOutput"),
+        },
+      },
     ];
   }
 
