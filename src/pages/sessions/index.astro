@@ -92,8 +92,8 @@ const sessions = dbSessions.map((session) => {
               <Card className='hover:bg-white/10 transition-colors'>
                 <CardHeader>
                   <CardTitle>
-                    {timeStarted.format("MMMM D")} Session
-                    <br />
+                    {timeStarted.format("MMMM D")} Session{" "}
+                    {session.device_identifier.split(".")[0]}
                     Device {session.device_identifier.split(".")[1]} <br />
                     {session.device_identifier}
                   </CardTitle>
