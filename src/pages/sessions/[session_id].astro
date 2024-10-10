@@ -71,19 +71,45 @@ const timeStarted = dayjs(session.timeStarted);
           return (
             <Card>
               <CardHeader>
-                <CardTitle>Session ID: {sessionEvent.id}</CardTitle>
+                <CardTitle>{sessionEvent.card_title}</CardTitle>
               </CardHeader>
 
               <CardContent>
-                <div class='flex space-x-2'>
-                  <p>Time Front: {sessionEvent.time_spent_front}</p>
-                  <p>Time Back: {sessionEvent.time_spent_back}</p>
+                <div class='card-content space-y-4'>
+                  <div class='flex space-x-6'>
+                    <p class='text-sm'>
+                      Time Front: {sessionEvent.time_spent_front} seconds
+                    </p>
+                    <p class='text-sm'>
+                      Time Back: {sessionEvent.time_spent_back} seconds
+                    </p>
+                  </div>
+                  <p class='text-sm'>
+                    Session Time:{" "}
+                    {dayjs(sessionEvent.starting_timestamp).format("H:mm:ss")}
+                    {" -> "}
+                    {dayjs(sessionEvent.submission_timestamp).format("H:mm:ss")}
+                  </p>
+                  <p class='text-sm'>
+                    Number of Flips: {sessionEvent.num_flips}
+                  </p>
+                  <p class='text-sm'>
+                    Flips Data Length:{" "}
+                    {Array.isArray(sessionEvent.flips)
+                      ? sessionEvent.flips.length
+                      : "Unknown"}
+                  </p>
+                  <p class='text-sm'>
+                    Mouse Position Data Length:{" "}
+                    {Array.isArray(sessionEvent.mouse_pos)
+                      ? sessionEvent.mouse_pos.length
+                      : "Unknown"}
+                  </p>
+                  <p class='text-sm'>
+                    Chosen Answer: {sessionEvent.chosen_answer}
+                  </p>
+                  <p class='text-sm'>Card Index: {sessionEvent.card_idx}</p>
                 </div>
-                <p>
-                  {dayjs(sessionEvent.starting_timestamp).format("H:mm:ss")}
-                  {" -> "}
-                  {dayjs(sessionEvent.submission_timestamp).format("H:mm:ss")}
-                </p>
               </CardContent>
             </Card>
           );

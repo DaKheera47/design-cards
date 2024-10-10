@@ -81,7 +81,6 @@ const sessions = dbSessions.map((session) => {
             session.session_duration,
             "milliseconds",
           );
-
           const humanDuration = sessionDuration.format("m[m] s[s]");
 
           return (
@@ -89,9 +88,9 @@ const sessions = dbSessions.map((session) => {
               <Card className='hover:bg-white/10 transition-colors'>
                 <CardHeader>
                   <CardTitle>
-                    {timeStarted.format("MMMM D")} Session{" "}
-                    {session.sessionIdentifier}, Device{" "}
-                    {session.device_identifier.split(".")[1]} <br />
+                    {timeStarted.format("MMMM D")} Session
+                    <br />
+                    Device {session.device_identifier.split(".")[1]} <br />
                     {session.device_identifier}
                   </CardTitle>
                 </CardHeader>
@@ -107,6 +106,18 @@ const sessions = dbSessions.map((session) => {
                   </p>
 
                   <p>Session Duration: {humanDuration}</p>
+
+                  <p>
+                    Eye Tracking:{" "}
+                    {session.isEyeTracked ? "Enabled" : "Disabled"}
+                  </p>
+
+                  <p>
+                    Browser Info Length:{" "}
+                    {Array.isArray(session.browserInfo)
+                      ? session.browserInfo.length
+                      : "Unknown"}
+                  </p>
                 </CardContent>
               </Card>
             </a>
