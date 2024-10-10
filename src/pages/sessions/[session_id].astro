@@ -59,6 +59,9 @@ const timeStarted = dayjs(session.timeStarted);
       <button
         data-json={sessionEventsJson}
         data-session-id={session_id}
+        data-file-name={`session-${session.device_identifier} - ${timeStarted.format(
+          "MMMM D",
+        )}.json`}
         id='download'
         class:list={[buttonVariants({ variant: "default" }), "mb-10 w-full"]}
       >
@@ -130,7 +133,7 @@ const timeStarted = dayjs(session.timeStarted);
 
     const downloadJson = () => {
       const data = button.getAttribute("data-json");
-      const session_id = button.getAttribute("data-session-id");
+      const filename = button.getAttribute("data-file-name");
 
       if (!data) return;
 
@@ -140,7 +143,7 @@ const timeStarted = dayjs(session.timeStarted);
       const url = URL.createObjectURL(blob);
       const a = document.createElement("a");
       a.href = url;
-      a.download = `session-${session_id}.json`;
+      a.download = filename ?? "data.json";
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);
