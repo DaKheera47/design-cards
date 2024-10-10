@@ -1,7 +1,7 @@
 ---
 import { buttonVariants } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { SessionEvent, db, eq } from "astro:db";
+import { Session, SessionEvent, db, eq } from "astro:db";
 import dayjs from "dayjs";
 import Layout from "../../layouts/Layout.astro";
 
@@ -16,41 +16,56 @@ const sessionEvents = await db
   .where(eq(SessionEvent.session_id, session_id));
 
 const sessionEventsJson = JSON.stringify(sessionEvents);
+
+// get the session details
+let sessionDb = await db
+  .select()
+  .from(Session)
+  // @ts-ignore -- TS doesn't like eq coming from Astro
+  .where(eq(Session.id, session_id ?? ""))
+  .limit(1);
+
+// @ts-ignore -- TS doesn't like the fact that we're assuming the session exists
+const session = sessionDb[0];
+session.sessionIdentifier = parseInt(session.device_identifier.split(".")[0]);
+
+const timeStarted = dayjs(session.timeStarted);
 ---
 
 <Layout
-  title="Session"
+  title='Session'
   dark
 >
-  <section class="max-h-screen py-8">
+  <section class='max-h-screen py-8'>
     <div>
       <a
-        href="/sessions"
+        href='/sessions'
         class={buttonVariants({ variant: "link" })}
       >
         Home
       </a>
 
-      <h1 class="mb-6 text-balance text-center text-2xl capitalize">
-        session {session_id} - {
-          sessionEvents.length === 0 ? "No" : sessionEvents.length
-        }
-        Session Events
+      <h1 class='mb-6 text-balance text-center text-2xl capitalize'>
+        {timeStarted.format("MMMM D")} Session{" "}
+        {session.sessionIdentifier}, Device{" "}
+        {session.device_identifier.split(".")[1]}
       </h1>
     </div>
 
-    <div class="mb-8">
+    <div class='mb-8'>
       <button
         data-json={sessionEventsJson}
         data-session-id={session_id}
-        id="download"
+        id='download'
         class:list={[buttonVariants({ variant: "default" }), "mb-10 w-full"]}
       >
-        Download Data for session {session_id}
+        Download Data for {timeStarted.format("MMMM D")} Session{" "}
+        {session.sessionIdentifier}, Device{" "}
+        {session.device_identifier.split(".")[1]}
       </button>
     </div>
 
-    <div class="grid grid-cols-1 gap-4">
+    <div class='grid grid-cols-1 gap-4'>
       {
         sessionEvents.map((sessionEvent) => {
           return (
@@ -60,7 +75,7 @@ const sessionEventsJson = JSON.stringify(sessionEvents);
               </CardHeader>
 
               <CardContent>
-                <div class="flex space-x-2">
+                <div class='flex space-x-2'>
                   <p>Time Front: {sessionEvent.time_spent_front}</p>
                   <p>Time Back: {sessionEvent.time_spent_back}</p>
                 </div>

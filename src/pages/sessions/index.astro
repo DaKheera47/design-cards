@@ -10,29 +10,66 @@ import Layout from "../../layouts/Layout.astro";
 dayjs.extend(duration);
 
 // get all data
-const sessions = await db.select().from(Session);
+const dbSessions = await db.select().from(Session);
+
+dbSessions.sort((a, b) => {
+  // First, sort by 'timeStarted' field using dayjs to compare only dates (ignoring time)
+  const dateA = dayjs(a.timeStarted).startOf("day");
+  const dateB = dayjs(b.timeStarted).startOf("day");
+
+  if (!dateA.isSame(dateB)) {
+    return dateA.isBefore(dateB) ? -1 : 1;
+  }
+
+  // If dates are the same, split the device_identifier and sort by session and device
+  const aIdentifier = a.device_identifier.split(".");
+  const bIdentifier = b.device_identifier.split(".");
+
+  const aSession = parseInt(aIdentifier[0]);
+  const aDevice = parseInt(aIdentifier[1]);
+
+  const bSession = parseInt(bIdentifier[0]);
+  const bDevice = parseInt(bIdentifier[1]);
+
+  if (aSession === bSession) {
+    console.log("aSession === bSession", aDevice - bDevice);
+    return aDevice - bDevice;
+  }
+
+  return aSession - bSession;
+});
+
+// add the sessionIdentifier to the session
+const sessions = dbSessions.map((session) => {
+  const identifier = session.device_identifier.split(".");
+  const sessionIdentifier = parseInt(identifier[0]);
+
+  session.sessionIdentifier = sessionIdentifier;
+
+  return session;
+});
 ---
 
 <Layout
-  title="Download Session Data"
+  title='Download Session Data'
   dark
 >
-  <section class="max-h-screen py-8">
-    <h1 class="mb-6 text-balance text-center text-2xl capitalize">
+  <section class='max-h-screen py-8'>
+    <h1 class='mb-6 text-balance text-center text-2xl capitalize'>
       See all sessions recorded so far
     </h1>
 
     <div>
       <button
-        type="button"
-        id="download"
+        type='button'
+        id='download'
         class:list={[buttonVariants({ variant: "default" }), "mb-10 w-full"]}
       >
         Download all(!) Data for all sessions
       </button>
     </div>
 
-    <div class="grid grid-cols-3 gap-4">
+    <div class='grid grid-cols-3 gap-4'>
       {
         sessions.map((session) => {
           const timeStarted = dayjs(session.timeStarted);
@@ -49,10 +86,13 @@ const sessions = await db.select().from(Session);
 
           return (
             <a href={`/sessions/${session.id}`}>
-              <Card className="hover:bg-white/10 transition-colors">
+              <Card className='hover:bg-white/10 transition-colors'>
                 <CardHeader>
                   <CardTitle>
-                    Session {session.id}, Device {session.device_identifier}
+                    {timeStarted.format("MMMM D")} Session{" "}
+                    {session.sessionIdentifier}, Device{" "}
+                    {session.device_identifier.split(".")[1]} <br />
+                    {session.device_identifier}
                   </CardTitle>
                 </CardHeader>
 
