@@ -6,6 +6,10 @@ import dayjs from "dayjs";
 import duration from "dayjs/plugin/duration";
 import Layout from "../../layouts/Layout.astro";
 
+export type SessionWithSessionIdentifier = typeof Session & {
+  sessionIdentifier: number;
+};
+
 // extend dayjs with duration plugin
 dayjs.extend(duration);
 
@@ -32,7 +36,6 @@ dbSessions.sort((a, b) => {
   const bDevice = parseInt(bIdentifier[1]);
 
   if (aSession === bSession) {
-    console.log("aSession === bSession", aDevice - bDevice);
     return aDevice - bDevice;
   }
 
@@ -44,6 +47,7 @@ const sessions = dbSessions.map((session) => {
   const identifier = session.device_identifier.split(".");
   const sessionIdentifier = parseInt(identifier[0]);
 
+  // @ts-ignore -- TS doesn't like the fact that we're assuming the session exists
   session.sessionIdentifier = sessionIdentifier;
 
   return session;

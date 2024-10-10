@@ -27,6 +27,8 @@ let sessionDb = await db
 
 // @ts-ignore -- TS doesn't like the fact that we're assuming the session exists
 const session = sessionDb[0];
+
+// @ts-ignore -- TS doesn't like the fact that we're assuming the session exists
 session.sessionIdentifier = parseInt(session.device_identifier.split(".")[0]);
 
 const timeStarted = dayjs(session.timeStarted);
@@ -47,6 +49,7 @@ const timeStarted = dayjs(session.timeStarted);
 
       <h1 class='mb-6 text-balance text-center text-2xl capitalize'>
         {timeStarted.format("MMMM D")} Session{" "}
+        <!-- @ts-ignore -- TS doesn't like the fact that we're assuming the session exists -->
         {session.sessionIdentifier}, Device{" "}
         {session.device_identifier.split(".")[1]}
       </h1>
@@ -60,6 +63,7 @@ const timeStarted = dayjs(session.timeStarted);
         class:list={[buttonVariants({ variant: "default" }), "mb-10 w-full"]}
       >
         Download Data for {timeStarted.format("MMMM D")} Session{" "}
+        <!-- @ts-ignore -- TS doesn't like the fact that we're assuming the session exists -->
         {session.sessionIdentifier}, Device{" "}
         {session.device_identifier.split(".")[1]}
       </button>
